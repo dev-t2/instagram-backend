@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": ""
+    "dev": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/developer-t2/instaclone-backend/issues"
   },
-  "homepage": "https://github.com/developer-t2/instaclone-backend#readme"
+  "homepage": "https://github.com/developer-t2/instaclone-backend#readme",
+  "dependencies": {
+    "apollo-server": "^2.25.0",
+    "graphql": "^15.5.0"
+  }
 }
