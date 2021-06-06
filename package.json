@@ -2,9 +2,8 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon --exec babel-node app"
   },
   "repository": {
     "type": "git",
@@ -17,12 +16,14 @@
     "url": "https://github.com/developer-t2/instaclone-backend/issues"
   },
   "homepage": "https://github.com/developer-t2/instaclone-backend#readme",
-  "type": "module",
   "dependencies": {
-    "apollo-server": "^2.25.0",
+    "apollo-server": "^2.7.0",
     "graphql": "^15.5.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.4",
     "eslint": "^7.28.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
