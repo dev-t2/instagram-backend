@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "node app.js"
+    "dev": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,11 @@
   },
   "homepage": "https://github.com/developer-t2/instaclone-backend#readme",
   "dependencies": {
-    "apollo-server": "^2.25.0",
+    "apollo-server": "^2.7.0",
     "graphql": "^15.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "nodemon": "^2.0.7"
   }
 }
