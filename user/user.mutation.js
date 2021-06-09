@@ -7,20 +7,30 @@ export default {
       _,
       { firstName, lastName, userName, email, password }
     ) => {
-      const isUser = await client.user.findFirst({
-        where: { OR: [{ userName }, { email }] },
-      });
-      const hashedPassword = await bcrypt.hash(password, 10);
+      try {
+        const isUser = await client.user.findUnique({
+          where: { OR: [{ userName }, { email }] },
+        });
 
-      return client.user.create({
-        data: {
-          firstName,
-          lastName,
-          userName,
-          email,
-          password: hashedPassword,
-        },
-      });
+        if (isUser) {
+          throw new Error('userName or email already exists.');
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await client.user.create({
+          data: {
+            firstName,
+            lastName,
+            userName,
+            email,
+            password: hashedPassword,
+          },
+        });
+
+        return user;
+      } catch (error) {
+        return error;
+      }
     },
   },
 };
