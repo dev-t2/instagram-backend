@@ -1,8 +1,8 @@
-import client from '../prisma/client';
+import client from '../../prisma/client';
 
 export default {
   Query: {
-    getProfile: async (_, { userName }) => {
+    readProfile: async (_, { userName }) => {
       try {
         const user = await client.user.findUnique({ where: { userName } });
 
