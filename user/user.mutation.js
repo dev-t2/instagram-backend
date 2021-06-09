@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import client from '../client';
+import client from '../prisma/client';
 
 export default {
   Mutation: {
