@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { ApolloServer } from 'apollo-server';
 import schema from './schema';
-import { getUser } from './user';
+import { getUser } from './user/user.utils';
 
 dotenv.config();
 

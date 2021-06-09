@@ -15,3 +15,13 @@ export const getUser = async token => {
     return null;
   }
 };
+
+export const protectedResolver = resolver => {
+  return (root, args, context, info) => {
+    if (!context.loggedInUser) {
+      return { isSuccess: false, error: 'User authentication is required' };
+    }
+
+    return resolver(root, args, context, info);
+  };
+};
