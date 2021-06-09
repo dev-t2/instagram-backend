@@ -7,5 +7,7 @@
 - GraphQL Tools: https://www.graphql-tools.com/
 - Prisma: https://www.prisma.io/
 - PostgreSQL: https://www.postgresql.org/
-- Dotenv: https://www.npmjs.com/package/dotenv
+- DotEnv: https://www.npmjs.com/package/dotenv
 - Bcrypt: https://www.npmjs.com/package/bcrypt
+- JWT: https://www.npmjs.com/package/jsonwebtoken
+- Random Key Generator: https://randomkeygen.com/

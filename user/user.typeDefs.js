@@ -2,13 +2,19 @@ import { gql } from 'apollo-server';
 
 export default gql`
   type User {
-    id: String!
+    id: Int!
     firstName: String!
     lastName: String
     userName: String!
     email: String!
     createdAt: String!
     updatedAt: String!
+  }
+
+  type LoginResult {
+    isLogin: Boolean!
+    token: String
+    error: String
   }
 
   type Query {
@@ -23,5 +29,6 @@ export default gql`
       email: String!
       password: String!
     ): User
+    login(userName: String!, password: String!): LoginResult
   }
 `;
