@@ -11,6 +11,8 @@
   "rules": {
     "linebreak-style": "off",
     "no-console": "off",
-    "arrow-body-style": "off"
+    "arrow-body-style": "off",
+    "object-curly-newline": "off",
+    "comma-dangle": "off"
   }
 }

@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import client from '../client';
 
 export default {
@@ -6,11 +7,20 @@ export default {
       _,
       { firstName, lastName, userName, email, password }
     ) => {
-      const isUser = await client.user.findUnique({
+      const isUser = await client.user.findFirst({
         where: { OR: [{ userName }, { email }] },
       });
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-      console.log(isUser);
+      return client.user.create({
+        data: {
+          firstName,
+          lastName,
+          userName,
+          email,
+          password: hashedPassword,
+        },
+      });
     },
   },
 };

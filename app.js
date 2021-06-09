@@ -5,7 +5,6 @@ import schema from './schema';
 dotenv.config();
 
 const { PORT } = process.env;
-
 const server = new ApolloServer({ schema });
 
 server
