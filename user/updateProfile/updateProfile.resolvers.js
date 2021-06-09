@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import client from '../../prisma/client';
 
@@ -6,10 +5,9 @@ export default {
   Mutation: {
     updateProfile: async (
       _,
-      { token, firstName, lastName, userName, email, password }
+      { firstName, lastName, userName, email, password },
+      { loggedInUser }
     ) => {
-      const { id } = await jwt.verify(token, process.env.SECRET_KEY);
-
       let hashedPassword;
 
       if (password) {
@@ -17,7 +15,7 @@ export default {
       }
 
       const updatedUser = await client.user.update({
-        where: { id },
+        where: { id: loggedInUser.id },
         data: {
           firstName,
           lastName,
