@@ -8,6 +8,7 @@ export default gql`
 
   type Mutation {
     updateProfile(
+      token: String!
       firstName: String
       lastName: String
       userName: String
