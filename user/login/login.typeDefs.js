@@ -2,7 +2,7 @@ import { gql } from 'apollo-server';
 
 export default gql`
   type LoginResult {
-    result: Boolean!
+    isSuccess: Boolean!
     token: String
     error: String
   }
