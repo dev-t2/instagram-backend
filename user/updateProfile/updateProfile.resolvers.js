@@ -4,7 +4,7 @@ import { protectedResolver } from '../user.utils';
 
 const resolver = async (
   _,
-  { firstName, lastName, userName, email, password },
+  { firstName, lastName, userName, email, password, gender, avatar },
   { loggedInUser }
 ) => {
   let hashedPassword;
@@ -21,6 +21,7 @@ const resolver = async (
       userName,
       email,
       password: hashedPassword,
+      gender,
     },
   });
 
