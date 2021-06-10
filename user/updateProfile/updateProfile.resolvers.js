@@ -7,13 +7,16 @@ const resolver = async (
   { firstName, lastName, userName, email, password, aboutMe, avatar },
   { loggedInUser }
 ) => {
-  console.log(avatar);
-
   let hashedPassword;
 
   if (password) {
     hashedPassword = await bcrypt.hash(password, 10);
   }
+
+  const { filename, createReadStream } = await avatar;
+  const stream = createReadStream();
+
+  console.log(stream);
 
   const updatedUser = await client.user.update({
     where: { id: loggedInUser.id },
