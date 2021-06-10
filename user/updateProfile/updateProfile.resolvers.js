@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt';
+import { createWriteStream } from 'fs';
 import client from '../../prisma/client';
 import { protectedResolver } from '../user.utils';
+
+console.log(process.cwd());
 
 const resolver = async (
   _,
@@ -14,9 +17,10 @@ const resolver = async (
   }
 
   const { filename, createReadStream } = await avatar;
-  const stream = createReadStream();
+  const readStream = createReadStream();
+  const writeStream = createWriteStream(`${process.cwd()}/upload/${filename}`);
 
-  console.log(stream);
+  readStream.pipe(writeStream);
 
   const updatedUser = await client.user.update({
     where: { id: loggedInUser.id },
