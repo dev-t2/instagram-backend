@@ -11,3 +11,4 @@
 - Bcrypt: https://www.npmjs.com/package/bcrypt
 - JWT: https://www.npmjs.com/package/jsonwebtoken
 - Random Key Generator: https://randomkeygen.com/
+- Altair GraphQL Client: https://altair.sirmuel.design/

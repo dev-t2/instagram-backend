@@ -4,9 +4,11 @@ import { protectedResolver } from '../user.utils';
 
 const resolver = async (
   _,
-  { firstName, lastName, userName, email, password, gender, avatar },
+  { firstName, lastName, userName, email, password, aboutMe, avatar },
   { loggedInUser }
 ) => {
+  console.log(avatar);
+
   let hashedPassword;
 
   if (password) {
@@ -21,7 +23,7 @@ const resolver = async (
       userName,
       email,
       password: hashedPassword,
-      gender,
+      aboutMe,
     },
   });
 
