@@ -5,6 +5,8 @@
 - Babel: https://babeljs.io/
 - DotEnv: https://www.npmjs.com/package/dotenv
 - Apollo Server: https://www.apollographql.com/docs/apollo-server/
+- Apollo Server Express: https://www.apollographql.com/docs/apollo-server/v1/servers/express/
+- Morgan: https://www.npmjs.com/package/morgan
 - GraphQL Tools: https://www.graphql-tools.com/
 - Altair GraphQL Client: https://altair.sirmuel.design/
 - Prisma: https://www.prisma.io/

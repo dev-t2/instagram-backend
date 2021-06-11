@@ -3,8 +3,6 @@ import { createWriteStream } from 'fs';
 import client from '../../prisma/client';
 import { protectedResolver } from '../user.utils';
 
-console.log(process.cwd());
-
 const resolver = async (
   _,
   { firstName, lastName, userName, email, password, aboutMe, avatar },
