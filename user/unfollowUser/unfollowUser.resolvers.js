@@ -10,12 +10,12 @@ const resolver = async (_, { userName }, { loggedInUser }) => {
 
   await client.user.update({
     where: { id: loggedInUser.id },
-    data: { following: { connect: { userName } } },
+    data: { following: { disconnect: { userName } } },
   });
 
   return { isSuccess: true };
 };
 
 export default {
-  Mutation: { followUser: protectedResolver(resolver) },
+  Mutation: { unfollowUser: protectedResolver(resolver) },
 };

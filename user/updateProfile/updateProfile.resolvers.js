@@ -49,7 +49,5 @@ const resolver = async (
 };
 
 export default {
-  Mutation: {
-    updateProfile: protectedResolver(resolver),
-  },
+  Mutation: { updateProfile: protectedResolver(resolver) },
 };
