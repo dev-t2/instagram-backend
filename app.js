@@ -10,7 +10,7 @@ dotenv.config();
 
 const { PORT } = process.env;
 
-const server = new ApolloServer({
+const apollo = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => ({
@@ -20,9 +20,11 @@ const server = new ApolloServer({
 
 const app = express();
 
-server.applyMiddleware({ app });
-
 app.use(morgan('tiny'));
+app.use('/static', express.static('upload'));
+
+apollo.applyMiddleware({ app });
+
 app.listen({ port: PORT }, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}/graphql`);
 });

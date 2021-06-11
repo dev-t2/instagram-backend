@@ -9,16 +9,24 @@ const resolver = async (
   { loggedInUser }
 ) => {
   let hashedPassword;
+  let avatarUrl;
 
   if (password) {
     hashedPassword = await bcrypt.hash(password, 10);
   }
 
-  const { filename, createReadStream } = await avatar;
-  const readStream = createReadStream();
-  const writeStream = createWriteStream(`${process.cwd()}/upload/${filename}`);
+  if (avatar) {
+    const { filename, createReadStream } = await avatar;
+    const newFileName = `${Date.now()}_${filename}`;
+    const readStream = createReadStream();
+    const writeStream = createWriteStream(
+      `${process.cwd()}/upload/${newFileName}`
+    );
 
-  readStream.pipe(writeStream);
+    readStream.pipe(writeStream);
+
+    avatarUrl = `http://localhost:4000/static/${newFileName}`;
+  }
 
   const updatedUser = await client.user.update({
     where: { id: loggedInUser.id },
@@ -29,6 +37,7 @@ const resolver = async (
       email,
       password: hashedPassword,
       aboutMe,
+      avatar: avatarUrl,
     },
   });
 
