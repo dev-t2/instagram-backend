@@ -5,6 +5,8 @@ import client from '../../prisma/client';
 export default {
   Mutation: {
     login: async (_, { userName, password }) => {
+      console.log('1234');
+
       try {
         const user = await client.user.findUnique({ where: { userName } });
 
