@@ -1,7 +1,6 @@
-import client from '../../client';
 import { protectedResolver } from '../user.utils';
 
-const resolver = async (_, { userName }, { loggedInUser }) => {
+const resolver = async (_, { userName }, { client, loggedInUser }) => {
   const user = await client.user.findUnique({ where: { userName } });
 
   if (!user) {

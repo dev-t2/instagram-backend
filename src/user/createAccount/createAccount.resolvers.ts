@@ -1,11 +1,11 @@
 import * as bcrypt from 'bcrypt';
-import client from '../../client';
 
 export default {
   Mutation: {
     createAccount: async (
       _,
-      { firstName, lastName, userName, email, password }
+      { firstName, lastName, userName, email, password },
+      { client }
     ) => {
       try {
         const isUser = await client.user.findFirst({

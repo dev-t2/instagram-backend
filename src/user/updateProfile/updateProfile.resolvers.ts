@@ -1,12 +1,11 @@
 import * as bcrypt from 'bcrypt';
 import { createWriteStream } from 'fs';
-import client from '../../client';
 import { protectedResolver } from '../user.utils';
 
 const resolver = async (
   _,
   { firstName, lastName, userName, email, password, aboutMe, avatar },
-  { loggedInUser }
+  { client, loggedInUser }
 ) => {
   let hashedPassword;
   let avatarUrl;

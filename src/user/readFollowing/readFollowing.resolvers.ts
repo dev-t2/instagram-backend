@@ -1,8 +1,6 @@
-import client from '../../client';
-
 export default {
   Query: {
-    readFollowing: async (_, { userName, lastId }) => {
+    readFollowing: async (_, { userName, lastId }, { client }) => {
       const user = await client.user.findUnique({
         where: { userName },
         select: { id: true },

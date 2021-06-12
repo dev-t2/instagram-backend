@@ -18,6 +18,7 @@
     "arrow-parens": "off",
     "arrow-body-style": "off",
     "object-curly-newline": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-unused-vars": [2, { "args": "none" }]
   }
 }
