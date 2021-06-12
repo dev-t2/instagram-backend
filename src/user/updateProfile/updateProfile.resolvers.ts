@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { createWriteStream } from 'fs';
 import client from '../../client';
 import { protectedResolver } from '../user.utils';

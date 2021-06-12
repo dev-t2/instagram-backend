@@ -1,12 +1,10 @@
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import client from '../../client';
 
 export default {
   Mutation: {
     login: async (_, { userName, password }) => {
-      console.log('1234');
-
       try {
         const user = await client.user.findUnique({ where: { userName } });
 

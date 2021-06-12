@@ -1,7 +1,8 @@
 import 'dotenv/config';
+
 import * as express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import morgan from 'morgan';
+import * as morgan from 'morgan';
 
 import { typeDefs, resolvers } from './schema';
 import { getUser } from './user/user.utils';
