@@ -4,13 +4,14 @@
 - TypeScript: https://www.typescriptlang.org/
 - TS Node: https://www.npmjs.com/package/ts-node
 - ESLint: https://eslint.org/
-- DotEnv: https://www.npmjs.com/package/dotenv
+- Express: https://expressjs.com/ko/
 - Apollo Server Express: https://www.apollographql.com/docs/apollo-server/v1/servers/express/
+- DotEnv: https://www.npmjs.com/package/dotenv
 - Morgan: https://www.npmjs.com/package/morgan
-- GraphQL Tools: https://www.graphql-tools.com/
-- Altair GraphQL Client: https://altair.sirmuel.design/
 - Prisma: https://www.prisma.io/
 - PostgreSQL: https://www.postgresql.org/
 - Bcrypt: https://www.npmjs.com/package/bcrypt
 - JWT: https://www.npmjs.com/package/jsonwebtoken
 - Random Key Generator: https://randomkeygen.com/
+- GraphQL Tools: https://www.graphql-tools.com/
+- Altair GraphQL Client: https://altair.sirmuel.design/
