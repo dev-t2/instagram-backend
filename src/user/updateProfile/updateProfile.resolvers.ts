@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { createWriteStream } from 'fs';
-import client from '../../prisma/client';
+import client from '../../client';
 import { protectedResolver } from '../user.utils';
 
 const resolver = async (

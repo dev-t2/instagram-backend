@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import client from '../prisma/client';
+import client from '../client';
 
 export const getUser = async token => {
   try {

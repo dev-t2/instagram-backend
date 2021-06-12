@@ -1,12 +1,10 @@
-import dotenv from 'dotenv';
-import express from 'express';
+import 'dotenv/config';
+import * as express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import morgan from 'morgan';
 
 import { typeDefs, resolvers } from './schema';
 import { getUser } from './user/user.utils';
-
-dotenv.config();
 
 const { PORT } = process.env;
 

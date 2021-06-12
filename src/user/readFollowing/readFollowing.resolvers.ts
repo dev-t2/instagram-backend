@@ -1,4 +1,4 @@
-import client from '../../prisma/client';
+import client from '../../client';
 
 export default {
   Query: {

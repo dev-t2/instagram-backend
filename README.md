@@ -1,8 +1,9 @@
 # InstaClone Backend
 
 - Node: https://nodejs.org/ko/
+- TypeScript: https://www.typescriptlang.org/
+- TS Node: https://www.npmjs.com/package/ts-node
 - ESLint: https://eslint.org/
-- Babel: https://babeljs.io/
 - DotEnv: https://www.npmjs.com/package/dotenv
 - Apollo Server Express: https://www.apollographql.com/docs/apollo-server/v1/servers/express/
 - Morgan: https://www.npmjs.com/package/morgan

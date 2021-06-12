@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import client from '../../prisma/client';
+import client from '../../client';
 
 export default {
   Mutation: {
