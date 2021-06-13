@@ -5,12 +5,12 @@ const resolver: Resolvers = {
   Mutation: {
     createAccount: async (
       _,
-      { firstName, lastName, userName, email, password },
+      { name, nickName, email, password },
       { client }
     ) => {
       try {
         const isUser = await client.user.findFirst({
-          where: { OR: [{ userName }, { email }] },
+          where: { OR: [{ nickName }, { email }] },
           select: { id: true },
         });
 
@@ -22,9 +22,8 @@ const resolver: Resolvers = {
 
         await client.user.create({
           data: {
-            firstName,
-            lastName,
-            userName,
+            name,
+            nickName,
             email,
             password: hashedPassword,
           },
