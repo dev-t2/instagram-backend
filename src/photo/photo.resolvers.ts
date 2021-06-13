@@ -10,6 +10,18 @@ const resolvers: Resolvers = {
       return client.hsahTag.findMany({ where: { photos: { some: { id } } } });
     },
   },
+
+  HashTag: {
+    photos: ({ id }, { page }, { client }) => {
+      console.log(page);
+
+      return client.hsahTag.findUnique({ where: { id } }).photos();
+    },
+
+    totalPhoto: ({ id }, _, { client }) => {
+      return client.photo.count({ where: { hashTags: { some: { id } } } });
+    },
+  },
 };
 
 export default resolvers;
