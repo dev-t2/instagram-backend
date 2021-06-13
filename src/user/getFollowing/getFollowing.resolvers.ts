@@ -15,28 +15,28 @@ const resolvers: Resolvers = {
       }
 
       if (page) {
-        const following = await client.user
+        const followings = await client.user
           .findUnique({ where: { nickname } })
-          .follower({ skip: (page - 1) * pageSize, take: pageSize });
+          .followers({ skip: (page - 1) * pageSize, take: pageSize });
 
         const totalFollowing = await client.user.count({
-          where: { follower: { some: { nickname } } },
+          where: { followers: { some: { nickname } } },
         });
 
         const totalPage = Math.ceil(totalFollowing / pageSize);
 
-        return { isSuccess: true, following, totalPage };
+        return { isSuccess: true, followings, totalPage };
       }
 
-      const following = await client.user
+      const followings = await client.user
         .findUnique({ where: { nickname } })
-        .following({
+        .followings({
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,
           take: 5,
         });
 
-      return { isSuccess: true, following };
+      return { isSuccess: true, followings };
     },
   },
 };

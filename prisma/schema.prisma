@@ -11,18 +11,18 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  nickname  String   @unique
-  email     String   @unique
-  password  String
-  aboutMe   String?
-  avatar    String?
-  follower  User[]   @relation("FollowRelation", references: [id])
-  following User[]   @relation("FollowRelation", references: [id])
-  photo     Photo[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  name       String
+  nickname   String   @unique
+  email      String   @unique
+  password   String
+  aboutMe    String?
+  avatar     String?
+  followers  User[]   @relation("FollowRelation", references: [id])
+  followings User[]   @relation("FollowRelation", references: [id])
+  photos     Photo[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Photo {
@@ -31,15 +31,15 @@ model Photo {
   userId    Int
   file      String
   caption   String?
-  hashTag   HsahTag[]
+  hashTags  HsahTag[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
 
 model HsahTag {
   id        Int      @id @default(autoincrement())
-  hashTag   String
-  photo     Photo[]
+  hashTag   String   @unique
+  photos    Photo[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

@@ -3,11 +3,11 @@ import { Resolvers } from '../types';
 const resolvers: Resolvers = {
   User: {
     totalFollower: ({ id }, _, { client }) => {
-      return client.user.count({ where: { follower: { some: { id } } } });
+      return client.user.count({ where: { followers: { some: { id } } } });
     },
 
     totalFollowing: ({ id }, _, { client }) => {
-      return client.user.count({ where: { following: { some: { id } } } });
+      return client.user.count({ where: { followings: { some: { id } } } });
     },
 
     isMe: ({ id }, _, { loggedInUser }) => {
@@ -20,7 +20,7 @@ const resolvers: Resolvers = {
       }
 
       const numberOfFollowing = await client.user.count({
-        where: { id: loggedInUser.id, following: { some: { id } } },
+        where: { id: loggedInUser.id, followings: { some: { id } } },
       });
 
       return Boolean(numberOfFollowing);

@@ -8,8 +8,8 @@ export default gql`
     email: String!
     aboutMe: String
     avatar: String
-    follower: [User]
-    following: [User]
+    followers: [User]
+    followings: [User]
     totalFollower: Int!
     totalFollowing: Int!
     isMe: Boolean!

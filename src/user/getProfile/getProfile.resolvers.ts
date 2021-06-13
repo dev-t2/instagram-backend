@@ -5,7 +5,7 @@ const resolvers: Resolvers = {
     getProfile: async (_, { nickname }, { client }) => {
       const user = await client.user.findUnique({
         where: { nickname },
-        include: { follower: true, following: true },
+        include: { followers: true, followings: true },
       });
 
       return user;

@@ -118,4 +118,4 @@ dist
 .pnp.*
 
 # File Upload
-upload
+*.jpg

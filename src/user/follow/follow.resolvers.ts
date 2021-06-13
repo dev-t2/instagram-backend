@@ -17,7 +17,7 @@ const resolver: Resolver = async (
 
   await client.user.update({
     where: { id: loggedInUser.id },
-    data: { following: { connect: { nickname } } },
+    data: { followings: { connect: { nickname } } },
   });
 
   return { isSuccess: true };
