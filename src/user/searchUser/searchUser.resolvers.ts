@@ -5,6 +5,7 @@ const resolvers: Resolvers = {
     searchUsers: async (_, { keyword }, { client }) => {
       const users = await client.user.findMany({
         where: { nickname: { contains: keyword } },
+        include: { follower: true, following: true },
       });
 
       return users;
