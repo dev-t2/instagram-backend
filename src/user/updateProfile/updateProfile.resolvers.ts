@@ -1,10 +1,11 @@
 import * as bcrypt from 'bcrypt';
 import { createWriteStream } from 'fs';
+import { Resolver, Resolvers } from '../../types';
 import { protectedResolver } from '../user.utils';
 
-const resolver = async (
+const resolver: Resolver = async (
   _,
-  { firstName, lastName, userName, email, password, aboutMe, avatar },
+  { name, nickName, email, password, aboutMe, avatar },
   { client, loggedInUser }
 ) => {
   let hashedPassword;
@@ -30,9 +31,8 @@ const resolver = async (
   const updatedUser = await client.user.update({
     where: { id: loggedInUser.id },
     data: {
-      firstName,
-      lastName,
-      userName,
+      name,
+      nickName,
       email,
       password: hashedPassword,
       aboutMe,
@@ -47,6 +47,8 @@ const resolver = async (
   return { isSuccess: true };
 };
 
-export default {
+const resolvers: Resolvers = {
   Mutation: { updateProfile: protectedResolver(resolver) },
 };
+
+export default resolvers;
