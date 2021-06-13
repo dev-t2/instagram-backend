@@ -12,9 +12,8 @@ generator client {
 
 model User {
   id        Int      @id @default(autoincrement())
-  firstName String
-  lastName  String?
-  userName  String   @unique
+  name      String
+  nickName  String   @unique
   email     String   @unique
   password  String
   aboutMe   String?

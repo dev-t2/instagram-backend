@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
+import { Resolvers } from '../../types';
 
-export default {
+const resolver: Resolvers = {
   Mutation: {
     createAccount: async (
       _,
@@ -10,6 +11,7 @@ export default {
       try {
         const isUser = await client.user.findFirst({
           where: { OR: [{ userName }, { email }] },
+          select: { id: true },
         });
 
         if (isUser) {
@@ -35,3 +37,5 @@ export default {
     },
   },
 };
+
+export default resolver;

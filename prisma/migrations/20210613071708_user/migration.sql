@@ -1,9 +1,8 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "firstName" TEXT NOT NULL,
-    "lastName" TEXT,
-    "userName" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "nickName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "aboutMe" TEXT,
@@ -21,7 +20,7 @@ CREATE TABLE "_FollowRelation" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User.userName_unique" ON "User"("userName");
+CREATE UNIQUE INDEX "User.nickName_unique" ON "User"("nickName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");

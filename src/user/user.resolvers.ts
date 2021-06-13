@@ -1,24 +1,20 @@
-import client from '../client';
+import { Resolvers } from '../types';
 
-export default {
+const resolvers: Resolvers = {
   User: {
-    totalFollower: ({ id }) => {
+    totalFollower: ({ id }, _, { client }) => {
       return client.user.count({ where: { follower: { some: { id } } } });
     },
 
-    totalFollowing: ({ id }) => {
+    totalFollowing: ({ id }, _, { client }) => {
       return client.user.count({ where: { following: { some: { id } } } });
     },
 
     isMe: ({ id }, _, { loggedInUser }) => {
-      if (!loggedInUser) {
-        return false;
-      }
-
-      return id === loggedInUser.id;
+      return id === loggedInUser?.id;
     },
 
-    isFollowing: async ({ id }, _, { loggedInUser }) => {
+    isFollowing: async ({ id }, _, { client, loggedInUser }) => {
       if (!loggedInUser) {
         return false;
       }
@@ -31,3 +27,5 @@ export default {
     },
   },
 };
+
+export default resolvers;

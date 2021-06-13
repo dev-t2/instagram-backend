@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
-import { ApolloServer } from 'apollo-server-express';
 import * as express from 'express';
+import { ApolloServer } from 'apollo-server-express';
 import * as morgan from 'morgan';
 
 import { typeDefs, resolvers } from './schema';
@@ -9,6 +9,8 @@ import client from './client';
 import { getUser } from './user/user.utils';
 
 const { PORT } = process.env;
+
+const app = express();
 
 const apollo = new ApolloServer({
   typeDefs,
@@ -18,8 +20,6 @@ const apollo = new ApolloServer({
     loggedInUser: await getUser(req.headers.token),
   }),
 });
-
-const app = express();
 
 app.use(morgan('tiny'));
 app.use('/static', express.static('upload'));
