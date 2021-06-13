@@ -2,7 +2,7 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    readFollowing: async (_, { nickName, lastId }, { client }) => {
+    getFollowing: async (_, { nickName, lastId }, { client }) => {
       const user = await client.user.findUnique({
         where: { nickName },
         select: { id: true },
