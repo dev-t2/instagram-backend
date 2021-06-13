@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcrypt';
+
 import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
@@ -15,7 +16,10 @@ const resolvers: Resolvers = {
         });
 
         if (isUser) {
-          throw new Error('userName or email already exists');
+          return {
+            isSuccess: false,
+            error: 'nickName or email already exists',
+          };
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
