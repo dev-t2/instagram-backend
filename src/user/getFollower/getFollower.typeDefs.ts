@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type readFollowerResult {
+  type GetFollowerResult {
     isSuccess: Boolean!
     follower: [User]
     totalPage: Int
@@ -9,6 +9,6 @@ export default gql`
   }
 
   type Query {
-    readFollower(userName: String!, page: Int!): readFollowerResult
+    getFollower(nickName: String!, page: Int!): GetFollowerResult
   }
 `;

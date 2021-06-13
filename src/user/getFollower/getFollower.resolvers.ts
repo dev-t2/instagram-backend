@@ -1,8 +1,12 @@
-export default {
+import { Resolvers } from '../../types';
+
+const pageSize = 5;
+
+const resolvers: Resolvers = {
   Query: {
-    readFollower: async (_, { userName, page }, { client }) => {
+    getFollower: async (_, { nickName, page }, { client }) => {
       const user = await client.user.findUnique({
-        where: { userName },
+        where: { nickName },
         select: { id: true },
       });
 
@@ -10,14 +14,12 @@ export default {
         return { isSuccess: false, error: 'User does not exist' };
       }
 
-      const pageSize = 5;
-
       const follower = await client.user
-        .findUnique({ where: { userName } })
+        .findUnique({ where: { nickName } })
         .follower({ skip: (page - 1) * pageSize, take: pageSize });
 
       const totalFollower = await client.user.count({
-        where: { following: { some: { userName } } },
+        where: { following: { some: { nickName } } },
       });
 
       const totalPage = Math.ceil(totalFollower / pageSize);
@@ -26,3 +28,5 @@ export default {
     },
   },
 };
+
+export default resolvers;
