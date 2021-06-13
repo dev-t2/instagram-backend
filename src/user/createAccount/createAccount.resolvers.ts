@@ -18,7 +18,7 @@ const resolvers: Resolvers = {
         if (isUser) {
           return {
             isSuccess: false,
-            error: 'Nickname or email already exists',
+            error: 'Nickname or Email already exists',
           };
         }
 
