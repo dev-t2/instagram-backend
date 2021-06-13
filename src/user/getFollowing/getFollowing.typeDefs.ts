@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 export default gql`
   type GetFollowingResult {
     isSuccess: Boolean!
-    following: [User]
+    followings: [User]
     totalPage: Int
     error: String
   }
