@@ -6,19 +6,19 @@ const resolvers: Resolvers = {
   Mutation: {
     createAccount: async (
       _,
-      { name, nickName, email, password },
+      { name, nickname, email, password },
       { client }
     ) => {
       try {
         const isUser = await client.user.findFirst({
-          where: { OR: [{ nickName }, { email }] },
+          where: { OR: [{ nickname }, { email }] },
           select: { id: true },
         });
 
         if (isUser) {
           return {
             isSuccess: false,
-            error: 'nickName or email already exists',
+            error: 'Nickname or email already exists',
           };
         }
 
@@ -27,7 +27,7 @@ const resolvers: Resolvers = {
         await client.user.create({
           data: {
             name,
-            nickName,
+            nickname,
             email,
             password: hashedPassword,
           },

@@ -7,6 +7,6 @@ export default gql`
   }
 
   type Mutation {
-    unfollow(nickName: String!): unfollowResult
+    unfollow(nickname: String!): unfollowResult
   }
 `;

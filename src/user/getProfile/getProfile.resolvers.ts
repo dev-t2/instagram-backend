@@ -2,9 +2,9 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    getProfile: async (_, { nickName }, { client }) => {
+    getProfile: async (_, { nickname }, { client }) => {
       const user = await client.user.findUnique({
-        where: { nickName },
+        where: { nickname },
       });
 
       return user;

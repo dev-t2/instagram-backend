@@ -1,9 +1,9 @@
 import { Resolvers } from '../../types';
 import { protectedResolver } from '../user.utils';
 
-const resolver = async (_, { nickName }, { client, loggedInUser }) => {
+const resolver = async (_, { nickname }, { client, loggedInUser }) => {
   const user = await client.user.findUnique({
-    where: { nickName },
+    where: { nickname },
     select: { id: true },
   });
 
@@ -13,7 +13,7 @@ const resolver = async (_, { nickName }, { client, loggedInUser }) => {
 
   await client.user.update({
     where: { id: loggedInUser.id },
-    data: { following: { disconnect: { nickName } } },
+    data: { following: { disconnect: { nickname } } },
   });
 
   return { isSuccess: true };

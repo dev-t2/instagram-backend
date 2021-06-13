@@ -9,7 +9,7 @@ export default gql`
   type Mutation {
     updateProfile(
       name: String
-      nickName: String
+      nickname: String
       email: String
       password: String
       aboutMe: String

@@ -4,9 +4,9 @@ const pageSize = 5;
 
 const resolvers: Resolvers = {
   Query: {
-    getFollower: async (_, { nickName, page }, { client }) => {
+    getFollower: async (_, { nickname, page }, { client }) => {
       const user = await client.user.findUnique({
-        where: { nickName },
+        where: { nickname },
         select: { id: true },
       });
 
@@ -15,11 +15,11 @@ const resolvers: Resolvers = {
       }
 
       const follower = await client.user
-        .findUnique({ where: { nickName } })
+        .findUnique({ where: { nickname } })
         .follower({ skip: (page - 1) * pageSize, take: pageSize });
 
       const totalFollower = await client.user.count({
-        where: { following: { some: { nickName } } },
+        where: { following: { some: { nickname } } },
       });
 
       const totalPage = Math.ceil(totalFollower / pageSize);

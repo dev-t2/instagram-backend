@@ -4,9 +4,9 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Mutation: {
-    login: async (_, { nickName, password }, { client }) => {
+    login: async (_, { nickname, password }, { client }) => {
       try {
-        const user = await client.user.findUnique({ where: { nickName } });
+        const user = await client.user.findUnique({ where: { nickname } });
 
         if (!user) {
           return { isSuccess: false, error: 'User Not Found' };

@@ -7,6 +7,6 @@ export default gql`
   }
 
   type Mutation {
-    follow(nickName: String!): FollowResult
+    follow(nickname: String!): FollowResult
   }
 `;

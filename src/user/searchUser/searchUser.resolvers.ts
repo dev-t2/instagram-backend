@@ -4,7 +4,7 @@ const resolvers: Resolvers = {
   Query: {
     searchUsers: async (_, { keyword }, { client }) => {
       const users = await client.user.findMany({
-        where: { nickName: { contains: keyword } },
+        where: { nickname: { contains: keyword } },
       });
 
       return users;

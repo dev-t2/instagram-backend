@@ -2,9 +2,9 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    getFollowing: async (_, { nickName, lastId }, { client }) => {
+    getFollowing: async (_, { nickname, lastId }, { client }) => {
       const user = await client.user.findUnique({
-        where: { nickName },
+        where: { nickname },
         select: { id: true },
       });
 
@@ -13,7 +13,7 @@ const resolvers: Resolvers = {
       }
 
       const following = await client.user
-        .findUnique({ where: { nickName } })
+        .findUnique({ where: { nickname } })
         .following({
           ...(lastId && { cursor: { id: lastId } }),
           skip: lastId ? 1 : 0,

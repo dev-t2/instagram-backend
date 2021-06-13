@@ -3,11 +3,11 @@ import { protectedResolver } from '../user.utils';
 
 const resolver: Resolver = async (
   _,
-  { nickName },
+  { nickname },
   { client, loggedInUser }
 ) => {
   const user = await client.user.findUnique({
-    where: { nickName },
+    where: { nickname },
     select: { id: true },
   });
 
@@ -17,7 +17,7 @@ const resolver: Resolver = async (
 
   await client.user.update({
     where: { id: loggedInUser.id },
-    data: { following: { connect: { nickName } } },
+    data: { following: { connect: { nickname } } },
   });
 
   return { isSuccess: true };

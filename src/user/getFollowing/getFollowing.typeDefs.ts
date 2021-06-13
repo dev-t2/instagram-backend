@@ -8,6 +8,6 @@ export default gql`
   }
 
   type Query {
-    getFollowing(nickName: String!, lastId: Int): GetFollowingResult
+    getFollowing(nickname: String!, lastId: Int): GetFollowingResult
   }
 `;

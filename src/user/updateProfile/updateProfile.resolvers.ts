@@ -5,7 +5,7 @@ import { protectedResolver } from '../user.utils';
 
 const resolver: Resolver = async (
   _,
-  { name, nickName, email, password, aboutMe, avatar },
+  { name, nickname, email, password, aboutMe, avatar },
   { client, loggedInUser }
 ) => {
   let hashedPassword;
@@ -32,7 +32,7 @@ const resolver: Resolver = async (
     where: { id: loggedInUser.id },
     data: {
       name,
-      nickName,
+      nickname,
       email,
       password: hashedPassword,
       aboutMe,

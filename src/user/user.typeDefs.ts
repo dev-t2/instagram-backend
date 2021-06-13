@@ -4,7 +4,7 @@ export default gql`
   type User {
     id: Int!
     name: String!
-    nickName: String!
+    nickname: String!
     email: String!
     aboutMe: String
     avatar: String
