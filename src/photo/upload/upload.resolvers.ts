@@ -21,8 +21,6 @@ const resolver: Resolver = async (
     }
   }
 
-  console.log(hashTags);
-
   return client.photo.create({
     data: {
       user: { connect: { id: loggedInUser.id } },
