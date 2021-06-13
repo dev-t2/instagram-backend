@@ -9,6 +9,6 @@ export default gql`
   }
 
   type Query {
-    getFollower(nickname: String!, page: Int!): GetFollowerResult
+    getFollower(nickname: String!, page: Int, lastId: Int): GetFollowerResult
   }
 `;
