@@ -1,13 +1,13 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type ReadFollowingResult {
+  type GetFollowingResult {
     isSuccess: Boolean!
     following: [User]
     error: String
   }
 
   type Query {
-    readFollowing(userName: String!, lastId: Int): ReadFollowingResult
+    getFollowing(nickName: String!, lastId: Int): GetFollowingResult
   }
 `;
