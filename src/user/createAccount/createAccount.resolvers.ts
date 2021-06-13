@@ -10,12 +10,12 @@ const resolvers: Resolvers = {
       { client }
     ) => {
       try {
-        const isUser = await client.user.findFirst({
+        const user = await client.user.findFirst({
           where: { OR: [{ nickname }, { email }] },
           select: { id: true },
         });
 
-        if (isUser) {
+        if (user) {
           return {
             isSuccess: false,
             error: 'Nickname or Email already exists',
