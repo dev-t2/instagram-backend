@@ -1,21 +1,25 @@
 import * as bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
+
 import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Mutation: {
     login: async (_, { nickname, password }, { client }) => {
       try {
-        const user = await client.user.findUnique({ where: { nickname } });
+        const user = await client.user.findUnique({
+          where: { nickname },
+          select: { id: true, password: true },
+        });
 
         if (!user) {
-          return { isSuccess: false, error: 'User Not Found' };
+          return { isSuccess: false, error: 'User does not exist' };
         }
 
         const isPassword = await bcrypt.compare(password, user.password);
 
         if (!isPassword) {
-          return { isSuccess: false, error: 'Invalid password' };
+          return { isSuccess: false, error: 'The password is incorrect' };
         }
 
         const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);

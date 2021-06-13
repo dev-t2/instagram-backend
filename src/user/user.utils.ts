@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
 import { Context, Resolver } from '../types';
 import client from '../client';
@@ -9,10 +9,17 @@ export const getUser = async token => {
       return null;
     }
 
-    const { id } = await jwt.verify(token, process.env.SECRET_KEY);
-    const user = await client.user.findUnique({ where: { id } });
+    const verifiedToken = await jwt.verify(token, process.env.SECRET_KEY);
 
-    return user;
+    if (verifiedToken?.id) {
+      const user = await client.user.findUnique({
+        where: { id: verifiedToken.id },
+      });
+
+      return user;
+    }
+
+    return null;
   } catch (error) {
     return null;
   }
