@@ -25,6 +25,10 @@ const resolvers: Resolvers = {
 
       return Boolean(numberOfFollowing);
     },
+
+    photos: ({ id }, _, { client }) => {
+      return client.user.findUnique({ where: { id } }).photos();
+    },
   },
 };
 
