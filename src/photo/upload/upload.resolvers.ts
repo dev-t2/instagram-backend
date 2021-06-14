@@ -1,25 +1,13 @@
 import { Resolver, Resolvers } from '../../types';
 import { protectedResolver } from '../../user/user.utils';
+import { parseHashTags } from '../photo.utils';
 
 const resolver: Resolver = async (
   _,
   { file, caption },
   { client, loggedInUser }
 ) => {
-  let hashTags;
-
-  if (caption) {
-    const matchedHashTags = caption.match(/#[\w]+/g);
-
-    if (matchedHashTags) {
-      hashTags = {
-        connectOrCreate: matchedHashTags.map(hashTag => ({
-          where: { hashTag },
-          create: { hashTag },
-        })),
-      };
-    }
-  }
+  const hashTags = parseHashTags(caption);
 
   return client.photo.create({
     data: {
