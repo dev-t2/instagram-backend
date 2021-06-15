@@ -7,6 +7,7 @@ export default gql`
     url: String!
     caption: String
     hashTags: [HashTag]
+    like: Int
     createdAt: String!
     updatedAt: String!
   }

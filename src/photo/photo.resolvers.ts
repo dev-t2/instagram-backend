@@ -9,6 +9,10 @@ const resolvers: Resolvers = {
     hashTags: ({ id }, _, { client }) => {
       return client.hsahTag.findMany({ where: { photos: { some: { id } } } });
     },
+
+    like: ({ id }, _, { client }) => {
+      return client.like.count({ where: { photoId: id } });
+    },
   },
 
   HashTag: {
