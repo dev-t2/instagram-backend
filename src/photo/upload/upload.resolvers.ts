@@ -4,7 +4,7 @@ import { parseHashTags } from '../photo.utils';
 
 const resolver: Resolver = async (
   _,
-  { file, caption },
+  { url, caption },
   { client, loggedInUser }
 ) => {
   const hashTags = parseHashTags(caption);
@@ -12,7 +12,7 @@ const resolver: Resolver = async (
   return client.photo.create({
     data: {
       user: { connect: { id: loggedInUser.id } },
-      file,
+      url,
       caption,
       hashTags,
     },
