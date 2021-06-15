@@ -68,6 +68,9 @@ CREATE UNIQUE INDEX "User.email_unique" ON "User"("email");
 CREATE UNIQUE INDEX "HsahTag.hashTag_unique" ON "HsahTag"("hashTag");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Like.photoId_userId_unique" ON "Like"("photoId", "userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_FollowRelation_AB_unique" ON "_FollowRelation"("A", "B");
 
 -- CreateIndex
