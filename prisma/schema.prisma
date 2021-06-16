@@ -22,7 +22,7 @@ model User {
   followings User[]    @relation("FollowRelation", references: [id])
   photos     Photo[]
   likes      Like[]
-  Comments   Comment[]
+  comments   Comment[]
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
@@ -35,7 +35,7 @@ model Photo {
   caption   String?
   hashTags  HsahTag[]
   likes     Like[]
-  Comments  Comment[]
+  comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }

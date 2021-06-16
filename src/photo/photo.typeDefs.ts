@@ -8,6 +8,7 @@ export default gql`
     caption: String
     hashTags: [HashTag]
     like: Int
+    isMine: Boolean!
     createdAt: String!
     updatedAt: String!
   }
