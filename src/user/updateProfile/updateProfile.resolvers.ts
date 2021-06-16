@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 
 import { Resolver, Resolvers } from '../../types';
-import { uploadPhoto } from '../../common/common.utils';
+import { uploadToS3 } from '../../common/common.utils';
 import { checkLogin } from '../user.utils';
 
 const resolver: Resolver = async (
@@ -17,7 +17,7 @@ const resolver: Resolver = async (
   }
 
   if (avatar) {
-    avatarUrl = await uploadPhoto(avatar);
+    avatarUrl = await uploadToS3('avatar', avatar);
   }
 
   const updatedUser = await client.user.update({

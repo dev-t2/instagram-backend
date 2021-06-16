@@ -7,9 +7,9 @@ aws.config.update({
   },
 });
 
-export const uploadPhoto = async file => {
+export const uploadToS3 = async (folder, file) => {
   const { filename, createReadStream } = await file;
-  const uploadFileName = `${Date.now()}_${filename}`;
+  const uploadFileName = `${folder}/${Date.now()}_${filename}`;
   const readStream = createReadStream();
 
   const { Location } = await new aws.S3()

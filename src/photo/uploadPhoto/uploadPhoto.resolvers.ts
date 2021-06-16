@@ -1,18 +1,20 @@
 import { Resolver, Resolvers } from '../../types';
+import { uploadToS3 } from '../../common/common.utils';
 import { checkLogin } from '../../user/user.utils';
 import { parseHashTags } from '../photo.utils';
 
 const resolver: Resolver = async (
   _,
-  { url, caption },
+  { photo, caption },
   { client, loggedInUser }
 ) => {
   const hashTags = parseHashTags(caption);
+  const photoUrl = await uploadToS3('photo', photo);
 
   return client.photo.create({
     data: {
       user: { connect: { id: loggedInUser.id } },
-      url,
+      url: photoUrl,
       caption,
       hashTags,
     },
@@ -21,7 +23,7 @@ const resolver: Resolver = async (
 
 const resolvers: Resolvers = {
   Mutation: {
-    upload: checkLogin(resolver),
+    uploadPhoto: checkLogin(resolver),
   },
 };
 
