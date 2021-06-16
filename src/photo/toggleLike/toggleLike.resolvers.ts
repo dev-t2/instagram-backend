@@ -1,5 +1,5 @@
 import { Resolver, Resolvers } from '../../types';
-import { protectedResolver } from '../../user/user.utils';
+import { checkLogin } from '../../user/user.utils';
 
 const resolver: Resolver = async (_, { id }, { client, loggedInUser }) => {
   const photo = await client.photo.findUnique({ where: { id } });
@@ -27,7 +27,7 @@ const resolver: Resolver = async (_, { id }, { client, loggedInUser }) => {
 
 const resolvers: Resolvers = {
   Mutation: {
-    toggleLike: protectedResolver(resolver),
+    toggleLike: checkLogin(resolver),
   },
 };
 

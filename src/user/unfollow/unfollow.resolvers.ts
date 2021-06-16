@@ -1,5 +1,5 @@
 import { Resolvers } from '../../types';
-import { protectedResolver } from '../user.utils';
+import { checkLogin } from '../user.utils';
 
 const resolver = async (_, { nickname }, { client, loggedInUser }) => {
   const user = await client.user.findUnique({
@@ -20,7 +20,7 @@ const resolver = async (_, { nickname }, { client, loggedInUser }) => {
 };
 
 const resolvers: Resolvers = {
-  Mutation: { unfollow: protectedResolver(resolver) },
+  Mutation: { unfollow: checkLogin(resolver) },
 };
 
 export default resolvers;

@@ -1,5 +1,5 @@
 import { Resolver, Resolvers } from '../../types';
-import { protectedResolver } from '../../user/user.utils';
+import { checkLogin } from '../../user/user.utils';
 
 const resolver: Resolver = (_, __, { client, loggedInUser }) => {
   return client.photo.findMany({
@@ -15,7 +15,7 @@ const resolver: Resolver = (_, __, { client, loggedInUser }) => {
 
 const resolvers: Resolvers = {
   Query: {
-    getFeed: protectedResolver(resolver),
+    getFeed: checkLogin(resolver),
   },
 };
 

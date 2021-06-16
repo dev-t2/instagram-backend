@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { createWriteStream } from 'fs';
 import { Resolver, Resolvers } from '../../types';
-import { protectedResolver } from '../user.utils';
+import { checkLogin } from '../user.utils';
 
 const resolver: Resolver = async (
   _,
@@ -48,7 +48,7 @@ const resolver: Resolver = async (
 };
 
 const resolvers: Resolvers = {
-  Mutation: { updateProfile: protectedResolver(resolver) },
+  Mutation: { updateProfile: checkLogin(resolver) },
 };
 
 export default resolvers;

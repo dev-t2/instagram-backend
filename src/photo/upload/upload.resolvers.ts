@@ -1,5 +1,5 @@
 import { Resolver, Resolvers } from '../../types';
-import { protectedResolver } from '../../user/user.utils';
+import { checkLogin } from '../../user/user.utils';
 import { parseHashTags } from '../photo.utils';
 
 const resolver: Resolver = async (
@@ -21,7 +21,7 @@ const resolver: Resolver = async (
 
 const resolvers: Resolvers = {
   Mutation: {
-    upload: protectedResolver(resolver),
+    upload: checkLogin(resolver),
   },
 };
 

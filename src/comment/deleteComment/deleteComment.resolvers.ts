@@ -1,5 +1,5 @@
 import { Resolver, Resolvers } from '../../types';
-import { protectedResolver } from '../../user/user.utils';
+import { checkLogin } from '../../user/user.utils';
 
 const resolver: Resolver = async (_, { id }, { client, loggedInUser }) => {
   const comment = await client.comment.findUnique({
@@ -22,7 +22,7 @@ const resolver: Resolver = async (_, { id }, { client, loggedInUser }) => {
 
 const resolvers: Resolvers = {
   Mutation: {
-    deleteComment: protectedResolver(resolver),
+    deleteComment: checkLogin(resolver),
   },
 };
 

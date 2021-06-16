@@ -1,5 +1,5 @@
 import { Resolver, Resolvers } from '../../types';
-import { protectedResolver } from '../user.utils';
+import { checkLogin } from '../user.utils';
 
 const resolver: Resolver = async (
   _,
@@ -24,7 +24,7 @@ const resolver: Resolver = async (
 };
 
 const resolvers: Resolvers = {
-  Mutation: { follow: protectedResolver(resolver) },
+  Mutation: { follow: checkLogin(resolver) },
 };
 
 export default resolvers;
