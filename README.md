@@ -15,3 +15,5 @@
 - Random Key Generator: https://randomkeygen.com/
 - GraphQL Tools: https://www.graphql-tools.com/
 - Altair GraphQL Client: https://altair.sirmuel.design/
+- AWS: https://aws.amazon.com/ko/
+- AWS SDK: https://www.npmjs.com/package/aws-sdk
