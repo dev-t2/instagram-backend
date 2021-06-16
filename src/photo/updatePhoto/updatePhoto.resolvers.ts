@@ -29,7 +29,7 @@ const resolver: Resolver = async (
 
 const resolvers: Resolvers = {
   Mutation: {
-    editPhoto: protectedResolver(resolver),
+    updatePhoto: protectedResolver(resolver),
   },
 };
 

@@ -1,12 +1,12 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type EditPhotoResult {
+  type UpdateCommentResult {
     isSuccess: Boolean!
     error: String
   }
 
   type Mutation {
-    editPhoto(id: Int!, caption: String!): EditPhotoResult
+    updateComment(id: Int!, text: String!): UpdateCommentResult
   }
 `;
