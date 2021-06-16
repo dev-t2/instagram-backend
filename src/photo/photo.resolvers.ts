@@ -17,6 +17,10 @@ const resolvers: Resolvers = {
     comment: ({ id }, _, { client }) => {
       return client.comment.count({ where: { photoId: id } });
     },
+
+    isMine: ({ userId }, _, { loggedInUser }) => {
+      return userId === loggedInUser?.id;
+    },
   },
 
   HashTag: {
