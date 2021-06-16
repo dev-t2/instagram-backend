@@ -1,7 +1,7 @@
 import { Resolvers } from '../types';
 
 const resolvers: Resolvers = {
-  Commnet: {
+  Comment: {
     isMine: ({ userId }, _, { loggedInUser }) => {
       return userId === loggedInUser?.id;
     },
