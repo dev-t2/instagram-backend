@@ -13,6 +13,10 @@ const resolvers: Resolvers = {
     like: ({ id }, _, { client }) => {
       return client.like.count({ where: { photoId: id } });
     },
+
+    comment: ({ id }, _, { client }) => {
+      return client.comment.count({ where: { photoId: id } });
+    },
   },
 
   HashTag: {

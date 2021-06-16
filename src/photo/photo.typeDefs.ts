@@ -7,7 +7,8 @@ export default gql`
     url: String!
     caption: String
     hashTags: [HashTag]
-    like: Int
+    like: Int!
+    comment: Int!
     isMine: Boolean!
     createdAt: String!
     updatedAt: String!
