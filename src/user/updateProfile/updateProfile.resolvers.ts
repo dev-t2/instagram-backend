@@ -1,6 +1,7 @@
 import * as bcrypt from 'bcrypt';
-import { createWriteStream } from 'fs';
+
 import { Resolver, Resolvers } from '../../types';
+import { uploadPhoto } from '../../common/common.utils';
 import { checkLogin } from '../user.utils';
 
 const resolver: Resolver = async (
@@ -16,16 +17,7 @@ const resolver: Resolver = async (
   }
 
   if (avatar) {
-    const { filename, createReadStream } = await avatar;
-    const newFileName = `${Date.now()}_${filename}`;
-    const readStream = createReadStream();
-    const writeStream = createWriteStream(
-      `${process.cwd()}/upload/${newFileName}`
-    );
-
-    readStream.pipe(writeStream);
-
-    avatarUrl = `http://localhost:4000/static/${newFileName}`;
+    avatarUrl = await uploadPhoto(avatar);
   }
 
   const updatedUser = await client.user.update({
