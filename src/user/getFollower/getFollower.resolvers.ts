@@ -4,8 +4,8 @@ const pageSize = 5;
 
 const resolvers: Resolvers = {
   Query: {
-    getFollower: async (_, { nickname, page, lastId }, { client }) => {
-      const user = await client.user.findUnique({
+    getFollower: async (_, { nickname, page, lastId }, { prismaClient }) => {
+      const user = await prismaClient.user.findUnique({
         where: { nickname },
         select: { id: true },
       });
@@ -15,11 +15,11 @@ const resolvers: Resolvers = {
       }
 
       if (page) {
-        const followers = await client.user
+        const followers = await prismaClient.user
           .findUnique({ where: { nickname } })
           .followers({ skip: (page - 1) * pageSize, take: pageSize });
 
-        const totalFollower = await client.user.count({
+        const totalFollower = await prismaClient.user.count({
           where: { followings: { some: { nickname } } },
         });
 
@@ -28,7 +28,7 @@ const resolvers: Resolvers = {
         return { isSuccess: true, followers, totalPage };
       }
 
-      const followers = await client.user
+      const followers = await prismaClient.user
         .findUnique({ where: { nickname } })
         .followers({
           ...(lastId && { cursor: { id: lastId } }),

@@ -1,16 +1,11 @@
 import { PrismaClient, User } from '@prisma/client';
 
-export type Context = {
+type Context = {
   prismaClient: PrismaClient;
   loggedInUser?: User;
 };
 
-export type Resolver = (
-  root: any,
-  args: any,
-  context: Context,
-  info: any
-) => any;
+type Resolver = (root: any, args: any, context: Context, info: any) => any;
 
 export type Resolvers = {
   [key: string]: {

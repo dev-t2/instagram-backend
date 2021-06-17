@@ -2,8 +2,8 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    getProfile: async (_, { nickname }, { client }) => {
-      const user = await client.user.findUnique({
+    getProfile: async (_, { nickname }, { prismaClient }) => {
+      const user = await prismaClient.user.findUnique({
         where: { nickname },
         include: { followers: true, followings: true },
       });

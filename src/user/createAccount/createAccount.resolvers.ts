@@ -7,36 +7,32 @@ const resolvers: Resolvers = {
     createAccount: async (
       _,
       { name, nickname, email, password },
-      { client }
+      { prismaClient }
     ) => {
-      try {
-        const user = await client.user.findFirst({
-          where: { OR: [{ nickname }, { email }] },
-          select: { id: true },
-        });
+      const user = await prismaClient.user.findFirst({
+        where: { OR: [{ nickname }, { email }] },
+        select: { id: true },
+      });
 
-        if (user) {
-          return {
-            isSuccess: false,
-            error: 'Nickname or Email already exists',
-          };
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        await client.user.create({
-          data: {
-            name,
-            nickname,
-            email,
-            password: hashedPassword,
-          },
-        });
-
-        return { isSuccess: true };
-      } catch (error) {
-        return { isSuccess: false, error };
+      if (user) {
+        return {
+          isSuccess: false,
+          error: 'Nickname or Email already exists',
+        };
       }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      await prismaClient.user.create({
+        data: {
+          name,
+          nickname,
+          email,
+          password: hashedPassword,
+        },
+      });
+
+      return { isSuccess: true };
     },
   },
 };

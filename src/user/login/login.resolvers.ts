@@ -5,9 +5,9 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Mutation: {
-    login: async (_, { nickname, password }, { client }) => {
+    login: async (_, { nickname, password }, { prismaClient }) => {
       try {
-        const user = await client.user.findUnique({
+        const user = await prismaClient.user.findUnique({
           where: { nickname },
           select: { id: true, password: true },
         });
