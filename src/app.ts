@@ -4,28 +4,23 @@ import * as express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import * as morgan from 'morgan';
 
-import { typeDefs, resolvers } from './schema';
-import client from './client';
-import { getUser } from './user/user.utils';
-
-const { PORT } = process.env;
+import { typeDefs, resolvers } from './graphqlSchema';
+import prismaClient from './prismaClient';
+import { loggedInUser } from './user/user.utils';
 
 const app = express();
-
 const apollo = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ req }) => ({
-    client,
-    loggedInUser: await getUser(req.headers.token),
+    prismaClient,
+    loggedInUser: await loggedInUser(req.headers.token),
   }),
 });
+const { PORT } = process.env;
 
 app.use(morgan('tiny'));
-app.use('/static', express.static('upload'));
-
 apollo.applyMiddleware({ app });
-
 app.listen({ port: PORT }, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}/graphql`);
 });

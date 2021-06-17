@@ -1,35 +1,31 @@
 import * as jwt from 'jsonwebtoken';
 
 import { Context, Resolver } from '../types';
-import client from '../client';
+import prismaClient from '../prismaClient';
 
-export const getUser = async token => {
-  try {
-    if (!token) {
-      return null;
-    }
-
-    const verifiedToken = await jwt.verify(token, process.env.SECRET_KEY);
-
-    if (verifiedToken?.id) {
-      const user = await client.user.findUnique({
-        where: { id: verifiedToken.id },
-      });
-
-      return user;
-    }
-
-    return null;
-  } catch (error) {
+export const loggedInUser = async token => {
+  if (!token) {
     return null;
   }
+
+  const verifiedToken = await jwt.verify(token, process.env.SECRET_KEY);
+
+  if (verifiedToken?.id) {
+    const user = await prismaClient.user.findUnique({
+      where: { id: verifiedToken.id },
+    });
+
+    return user;
+  }
+
+  return null;
 };
 
 export const checkLogin = (resolver: Resolver) => {
   return (root, args, context: Context, info) => {
-    const isLogin = context.loggedInUser;
+    const { loggedInUser } = context;
 
-    if (!isLogin) {
+    if (!loggedInUser) {
       const isQuery = info.operation.operation === 'query';
 
       if (isQuery) {

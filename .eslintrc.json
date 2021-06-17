@@ -20,6 +20,7 @@
     "object-curly-newline": "off",
     "comma-dangle": "off",
     "no-unused-vars": [2, { "args": "none" }],
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-shadow": "off"
   }
 }
