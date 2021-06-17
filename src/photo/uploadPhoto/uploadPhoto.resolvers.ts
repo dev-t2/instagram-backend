@@ -13,7 +13,7 @@ const resolvers: Resolvers = {
         return prismaClient.photo.create({
           data: {
             user: { connect: { id: loggedInUser.id } },
-            url: photoUrl,
+            photoUrl,
             caption,
             hashTags,
           },
