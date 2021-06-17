@@ -4,7 +4,7 @@
 - TypeScript: https://www.typescriptlang.org/
 - TS Node: https://www.npmjs.com/package/ts-node
 - ESLint: https://eslint.org/
-- Express: https://expressjs.com/ko/
+- Apollo: https://www.apollographql.com/docs/
 - Apollo Server Express: https://www.apollographql.com/docs/apollo-server/v1/servers/express/
 - DotEnv: https://www.npmjs.com/package/dotenv
 - Morgan: https://www.npmjs.com/package/morgan

@@ -1,5 +1,7 @@
 import { Resolvers } from '../../types';
 import { checkLogin } from '../../user/user.utils';
+import pubsub from '../../apolloPubSub';
+import { NEW_MESSAGE } from '../../constant';
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -37,12 +39,16 @@ const resolvers: Resolvers = {
           }
         }
 
-        await prismaClient.message.create({
+        const createdMessage = await prismaClient.message.create({
           data: {
             room: { connect: { id: room.id } },
             user: { connect: { id: loggedInUser.id } },
             message,
           },
+        });
+
+        pubsub.publish(NEW_MESSAGE, {
+          updateRoom: { ...createdMessage },
         });
 
         return { isSuccess: true };
