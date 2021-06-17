@@ -7,6 +7,9 @@ import * as morgan from 'morgan';
 import { typeDefs, resolvers } from './graphqlSchema';
 import prismaClient from './prismaClient';
 import { loggedInUser } from './user/user.utils';
+import pubsub from './apolloPubSub';
+
+console.log(pubsub);
 
 const app = express();
 const apollo = new ApolloServer({
