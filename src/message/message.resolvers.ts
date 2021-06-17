@@ -24,6 +24,12 @@ const resolvers: Resolvers = {
       });
     },
   },
+
+  Message: {
+    user: ({ id }, _, { prismaClient }) => {
+      return prismaClient.message.findUnique({ where: { id } }).user();
+    },
+  },
 };
 
 export default resolvers;
