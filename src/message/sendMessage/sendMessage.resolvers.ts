@@ -1,7 +1,6 @@
 import { Resolvers } from '../../types';
 import { checkLogin } from '../../user/user.utils';
-import pubsub from '../../apolloPubSub';
-import { NEW_MESSAGE } from '../../constant';
+import pubsub, { NEW_MESSAGE } from '../../apolloPubSub';
 
 const resolvers: Resolvers = {
   Mutation: {
