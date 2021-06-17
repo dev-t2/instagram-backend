@@ -88,6 +88,7 @@ model Message {
   user      User     @relation(fields: [userId], references: [id])
   userId    Int
   message   String
+  isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
