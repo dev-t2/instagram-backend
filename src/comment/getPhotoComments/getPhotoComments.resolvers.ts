@@ -2,8 +2,8 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    getPhotoComments: (_, { id }, { client }) => {
-      return client.comment.findMany({
+    getPhotoComments: (_, { id }, { prismaClient }) => {
+      return prismaClient.comment.findMany({
         where: { photoId: id },
         orderBy: { createdAt: 'asc' },
       });
