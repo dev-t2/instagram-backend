@@ -2,8 +2,8 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    getHashTag: (_, { hashTag }, { client }) => {
-      return client.hsahTag.findUnique({ where: { hashTag } });
+    getHashTag: (_, { hashTag }, { prismaClient }) => {
+      return prismaClient.hsahTag.findUnique({ where: { hashTag } });
     },
   },
 };

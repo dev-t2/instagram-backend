@@ -1,33 +1,35 @@
-import { Resolver, Resolvers } from '../../types';
+import { Resolvers } from '../../types';
 import { checkLogin } from '../../user/user.utils';
-
-const resolver: Resolver = async (_, { id }, { client, loggedInUser }) => {
-  const photo = await client.photo.findUnique({ where: { id } });
-
-  if (!photo) {
-    return { isSuccess: false, error: 'No photos found' };
-  }
-
-  const where = { photoId_userId: { photoId: id, userId: loggedInUser.id } };
-  const like = await client.like.findUnique({ where });
-
-  if (like) {
-    await client.like.delete({ where });
-  } else {
-    await client.like.create({
-      data: {
-        user: { connect: { id: loggedInUser.id } },
-        photo: { connect: { id: photo.id } },
-      },
-    });
-  }
-
-  return { isSuccess: true };
-};
 
 const resolvers: Resolvers = {
   Mutation: {
-    toggleLike: checkLogin(resolver),
+    toggleLike: checkLogin(
+      async (_, { id }, { prismaClient, loggedInUser }) => {
+        const photo = await prismaClient.photo.findUnique({ where: { id } });
+
+        if (!photo) {
+          return { isSuccess: false, error: 'No photos found' };
+        }
+
+        const where = {
+          photoId_userId: { photoId: id, userId: loggedInUser.id },
+        };
+        const like = await prismaClient.like.findUnique({ where });
+
+        if (like) {
+          await prismaClient.like.delete({ where });
+        } else {
+          await prismaClient.like.create({
+            data: {
+              user: { connect: { id: loggedInUser.id } },
+              photo: { connect: { id: photo.id } },
+            },
+          });
+        }
+
+        return { isSuccess: true };
+      }
+    ),
   },
 };
 

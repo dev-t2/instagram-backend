@@ -2,20 +2,22 @@ import { Resolvers } from '../types';
 
 const resolvers: Resolvers = {
   Photo: {
-    user: ({ userId }, _, { client }) => {
-      return client.user.findUnique({ where: { id: userId } });
+    user: ({ userId }, _, { prismaClient }) => {
+      return prismaClient.user.findUnique({ where: { id: userId } });
     },
 
-    hashTags: ({ id }, _, { client }) => {
-      return client.hsahTag.findMany({ where: { photos: { some: { id } } } });
+    hashTags: ({ id }, _, { prismaClient }) => {
+      return prismaClient.hsahTag.findMany({
+        where: { photos: { some: { id } } },
+      });
     },
 
-    like: ({ id }, _, { client }) => {
-      return client.like.count({ where: { photoId: id } });
+    like: ({ id }, _, { prismaClient }) => {
+      return prismaClient.like.count({ where: { photoId: id } });
     },
 
-    comment: ({ id }, _, { client }) => {
-      return client.comment.count({ where: { photoId: id } });
+    comment: ({ id }, _, { prismaClient }) => {
+      return prismaClient.comment.count({ where: { photoId: id } });
     },
 
     isMine: ({ userId }, _, { loggedInUser }) => {
@@ -24,14 +26,16 @@ const resolvers: Resolvers = {
   },
 
   HashTag: {
-    photos: ({ id }, { page }, { client }) => {
+    photos: ({ id }, { page }, { prismaClient }) => {
       console.log(page);
 
-      return client.hsahTag.findUnique({ where: { id } }).photos();
+      return prismaClient.hsahTag.findUnique({ where: { id } }).photos();
     },
 
-    totalPhoto: ({ id }, _, { client }) => {
-      return client.photo.count({ where: { hashTags: { some: { id } } } });
+    totalPhoto: ({ id }, _, { prismaClient }) => {
+      return prismaClient.photo.count({
+        where: { hashTags: { some: { id } } },
+      });
     },
   },
 };

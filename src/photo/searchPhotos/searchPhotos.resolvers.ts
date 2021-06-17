@@ -2,8 +2,8 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    searchPhotos: (_, { keyword }, { client }) => {
-      return client.photo.findMany({
+    searchPhotos: (_, { keyword }, { prismaClient }) => {
+      return prismaClient.photo.findMany({
         where: { caption: { contains: keyword } },
       });
     },

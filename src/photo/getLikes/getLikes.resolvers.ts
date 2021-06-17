@@ -2,8 +2,8 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    getLike: async (_, { id }, { client }) => {
-      const likes = await client.like.findMany({
+    getLikes: async (_, { id }, { prismaClient }) => {
+      const likes = await prismaClient.like.findMany({
         where: { photoId: id },
         select: { user: true },
       });

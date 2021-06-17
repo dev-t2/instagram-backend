@@ -2,8 +2,8 @@ import { Resolvers } from '../../types';
 
 const resolvers: Resolvers = {
   Query: {
-    getPhoto: (_, { id }, { client }) => {
-      return client.photo.findUnique({ where: { id } });
+    getPhoto: (_, { id }, { prismaClient }) => {
+      return prismaClient.photo.findUnique({ where: { id } });
     },
   },
 };
