@@ -23,7 +23,7 @@ const apollo = new ApolloServer({
       };
     }
 
-    return null;
+    return { prismaClient };
   },
 });
 
