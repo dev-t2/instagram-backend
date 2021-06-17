@@ -23,6 +23,8 @@ model User {
   photos     Photo[]
   likes      Like[]
   comments   Comment[]
+  rooms      Room[]
+  messages   Message[]
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 }
@@ -31,7 +33,7 @@ model Photo {
   id        Int       @id @default(autoincrement())
   user      User      @relation(fields: [userId], references: [id])
   userId    Int
-  url       String
+  photoUrl  String
   caption   String?
   hashTags  HsahTag[]
   likes     Like[]
@@ -62,11 +64,30 @@ model Like {
 
 model Comment {
   id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
   photo     Photo    @relation(fields: [photoId], references: [id])
   photoId   Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
   comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Room {
+  id        Int       @id @default(autoincrement())
+  users     User[]
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  room      Room     @relation(fields: [roomId], references: [id])
+  roomId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  message   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
