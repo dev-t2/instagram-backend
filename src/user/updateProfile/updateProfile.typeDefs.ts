@@ -9,6 +9,6 @@ export default gql`
       password: String
       aboutMe: String
       avatar: Upload
-    ): CommonMutationResult
+    ): CommonResponse
   }
 `;
