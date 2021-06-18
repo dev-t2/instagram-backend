@@ -5,6 +5,7 @@ import * as express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import * as morgan from 'morgan';
 
+import { connectionParams } from './types';
 import { typeDefs, resolvers } from './graphqlSchema';
 import prismaClient from './prismaClient';
 import { loggedInUser } from './user/user.utils';
@@ -15,15 +16,26 @@ const httpServer = http.createServer(app);
 const apollo = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req }) => {
-    if (req) {
+  subscriptions: {
+    onConnect: async ({ token }: connectionParams) => {
+      if (!token) {
+        throw new Error('Login is required');
+      }
+
+      return {
+        loggedInUser: await loggedInUser(token),
+      };
+    },
+  },
+  context: async ctx => {
+    if (ctx.req) {
       return {
         prismaClient,
-        loggedInUser: await loggedInUser(req.headers.token),
+        loggedInUser: await loggedInUser(ctx.req.headers.token),
       };
     }
 
-    return { prismaClient };
+    return { prismaClient, loggedInUser: ctx.connection.context.loggedInUser };
   },
 });
 

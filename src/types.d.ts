@@ -16,3 +16,7 @@ export type Resolvers = {
         };
   };
 };
+
+export type connectionParams = {
+  token: string;
+};

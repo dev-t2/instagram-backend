@@ -6,8 +6,11 @@ const resolvers: Resolvers = {
   Subscription: {
     updateRoom: {
       subscribe: async (root, args, context, info) => {
-        const room = await context.prismaClient.room.findUnique({
-          where: { id: args.id },
+        const room = await context.prismaClient.room.findFirst({
+          where: {
+            id: args.id,
+            users: { some: { id: context.loggedInUser.id } },
+          },
           select: { id: true },
         });
 
@@ -17,7 +20,25 @@ const resolvers: Resolvers = {
 
         return withFilter(
           () => pubsub.asyncIterator(NEW_MESSAGE),
-          ({ updateRoom }, { id }) => updateRoom.roomId === id
+          async ({ updateRoom }, { id }, { loggedInUser }) => {
+            if (updateRoom.roomId === id) {
+              const room = await context.prismaClient.room.findFirst({
+                where: {
+                  id,
+                  users: { some: { id: loggedInUser.id } },
+                },
+                select: { id: true },
+              });
+
+              if (!room) {
+                return false;
+              }
+
+              return true;
+            }
+
+            return false;
+          }
         )(root, args, context, info);
       },
     },
