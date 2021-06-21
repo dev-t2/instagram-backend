@@ -13,13 +13,17 @@ const resolvers: Resolvers = {
         });
 
         if (!user) {
-          return { isSuccess: false, error: 'User does not exist' };
+          return {
+            isSuccess: false,
+            error:
+              '입력한 닉네임을 사용하는 계정을 찾을 수 없습니다. 닉네임을 확인하고 다시 시도하세요.',
+          };
         }
 
         const isPassword = await bcrypt.compare(password, user.password);
 
         if (!isPassword) {
-          return { isSuccess: false, error: 'The password is incorrect' };
+          return { isSuccess: false, error: 'Invalid Password' };
         }
 
         const token = await jwt.sign({ id: user.id }, process.env.SECRET_KEY);
