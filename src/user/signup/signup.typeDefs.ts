@@ -7,6 +7,6 @@ export default gql`
       nickname: String!
       email: String!
       password: String!
-    ): CommonResult
+    ): CommonResult!
   }
 `;
