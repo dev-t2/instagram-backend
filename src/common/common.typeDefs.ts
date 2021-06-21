@@ -1,7 +1,7 @@
 import { gql } from 'apollo-server-express';
 
 export default gql`
-  type CommonResponse {
+  type CommonResult {
     isSuccess: Boolean!
     error: String
   }
