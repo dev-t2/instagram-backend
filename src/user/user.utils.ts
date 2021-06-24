@@ -32,7 +32,7 @@ export const checkLogin = (resolver: Resolver) => {
         return null;
       }
 
-      return { isSuccess: false, error: 'Login is required' };
+      return { isSuccess: false, error: '로그인이 필요합니다.' };
     }
 
     return resolver(root, args, context, info);
