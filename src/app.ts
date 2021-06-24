@@ -19,7 +19,7 @@ const apollo = new ApolloServer({
   subscriptions: {
     onConnect: async ({ token }: connectionParams) => {
       if (!token) {
-        throw new Error('Login is required');
+        throw new Error('로그인이 필요합니다.');
       }
 
       return {

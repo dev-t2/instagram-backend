@@ -8,17 +8,21 @@ export const loggedInUser = async token => {
     return null;
   }
 
-  const verifiedToken = await jwt.verify(token, process.env.SECRET_KEY);
+  try {
+    const verifiedToken = await jwt.verify(token, process.env.SECRET_KEY);
 
-  if (verifiedToken?.id) {
-    const user = await prismaClient.user.findUnique({
-      where: { id: verifiedToken.id },
-    });
+    if (verifiedToken?.id) {
+      const user = await prismaClient.user.findUnique({
+        where: { id: verifiedToken.id },
+      });
 
-    return user;
+      return user;
+    }
+
+    return null;
+  } catch (error) {
+    return null;
   }
-
-  return null;
 };
 
 export const checkLogin = (resolver: Resolver) => {

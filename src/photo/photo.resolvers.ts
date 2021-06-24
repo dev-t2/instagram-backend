@@ -26,9 +26,7 @@ const resolvers: Resolvers = {
   },
 
   HashTag: {
-    photos: ({ id }, { page }, { prismaClient }) => {
-      console.log(page);
-
+    photos: ({ id }, _, { prismaClient }) => {
       return prismaClient.hsahTag.findUnique({ where: { id } }).photos();
     },
 
