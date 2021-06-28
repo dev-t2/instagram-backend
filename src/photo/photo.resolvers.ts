@@ -21,7 +21,35 @@ const resolvers: Resolvers = {
     },
 
     isMine: ({ userId }, _, { loggedInUser }) => {
-      return userId === loggedInUser?.id;
+      if (!loggedInUser) {
+        return false;
+      }
+
+      return userId === loggedInUser.id;
+    },
+
+    isLiked: async ({ id }, _, { prismaClient, loggedInUser }) => {
+      if (!loggedInUser) {
+        return false;
+      }
+
+      const like = await prismaClient.like.findUnique({
+        where: {
+          photoId_userId: {
+            photoId: id,
+            userId: loggedInUser.id,
+          },
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!like) {
+        return false;
+      }
+
+      return true;
     },
   },
 
