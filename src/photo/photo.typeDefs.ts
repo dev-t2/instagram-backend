@@ -7,8 +7,9 @@ export default gql`
     photoUrl: String!
     caption: String
     hashTags: [HashTag]
-    like: Int!
-    comment: Int!
+    numberOfLikes: Int!
+    numberOfComments: Int!
+    comments: [Comment]
     isMine: Boolean!
     isLiked: Boolean!
     createdAt: String!

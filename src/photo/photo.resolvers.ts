@@ -12,12 +12,16 @@ const resolvers: Resolvers = {
       });
     },
 
-    like: ({ id }, _, { prismaClient }) => {
+    numberOfLikes: ({ id }, _, { prismaClient }) => {
       return prismaClient.like.count({ where: { photoId: id } });
     },
 
-    comment: ({ id }, _, { prismaClient }) => {
+    numberOfComments: ({ id }, _, { prismaClient }) => {
       return prismaClient.comment.count({ where: { photoId: id } });
+    },
+
+    comments: ({ id }, _, { prismaClient }) => {
+      return prismaClient.photo.findUnique({ where: { id } }).comments();
     },
 
     isMine: ({ userId }, _, { loggedInUser }) => {
