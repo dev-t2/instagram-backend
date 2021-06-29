@@ -21,7 +21,10 @@ const resolvers: Resolvers = {
     },
 
     comments: ({ id }, _, { prismaClient }) => {
-      return prismaClient.photo.findUnique({ where: { id } }).comments();
+      return prismaClient.comment.findMany({
+        where: { photoId: id },
+        include: { user: true },
+      });
     },
 
     isMine: ({ userId }, _, { loggedInUser }) => {
