@@ -8,6 +8,6 @@ export default gql`
   }
 
   type Mutation {
-    createComment(photoId: Int!, comment: String!): CreateCommentResult
+    createComment(photoId: Int!, comment: String!): CreateCommentResult!
   }
 `;
