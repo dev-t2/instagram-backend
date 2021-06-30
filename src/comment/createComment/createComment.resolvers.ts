@@ -11,10 +11,10 @@ const resolvers: Resolvers = {
         });
 
         if (!photo) {
-          return { isSuccess: false, error: 'No photos found' };
+          return null;
         }
 
-        await prismaClient.comment.create({
+        const createdComment = await prismaClient.comment.create({
           data: {
             user: { connect: { id: loggedInUser.id } },
             photo: { connect: { id: photoId } },
@@ -22,7 +22,7 @@ const resolvers: Resolvers = {
           },
         });
 
-        return { isSuccess: true };
+        return createdComment;
       }
     ),
   },
