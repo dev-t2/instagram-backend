@@ -3,7 +3,11 @@ import { Resolvers } from '../types';
 const resolvers: Resolvers = {
   Comment: {
     isMine: ({ userId }, _, { loggedInUser }) => {
-      return userId === loggedInUser?.id;
+      if (loggedInUser) {
+        return false;
+      }
+
+      return userId === loggedInUser.id;
     },
   },
 };
