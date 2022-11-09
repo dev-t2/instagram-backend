@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import Joi from 'joi';
 
+import { PrismaModule } from './prisma/prisma.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -10,6 +12,7 @@ import Joi from 'joi';
       }),
       validationOptions: { abortEarly: true },
     }),
+    PrismaModule,
   ],
 })
 export class AppModule {}
