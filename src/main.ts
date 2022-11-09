@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import { HttpLoggerMiddleware } from './common/middlewares';
 import { TransformInterceptor } from './common/interceptors';
 import { HttpExceptionFilter } from './common/filters';
+import { PrismaService } from './prisma/prisma.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,6 +21,9 @@ async function bootstrap() {
     }),
   );
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  const prismaService = app.get(PrismaService);
+  await prismaService.enableShutdownHooks(app);
 
   await app.listen(3000);
 }
