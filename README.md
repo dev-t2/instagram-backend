@@ -6,3 +6,4 @@
   - [Prisma](https://docs.nestjs.com/recipes/prisma)
 - [Prisma](https://www.prisma.io)
   - [Environment variables](https://www.prisma.io/docs/guides/development-environment/environment-variables)
+  - [Prisma Studio](https://www.prisma.io/docs/concepts/components/prisma-studio)
