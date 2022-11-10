@@ -11,6 +11,8 @@ import { UsersModule } from './users/users.module';
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('development', 'production').default('development'),
         DATABASE_URL: Joi.string().required(),
+        ADMIN_NAME: Joi.string().required(),
+        ADMIN_PASSWORD: Joi.string().required(),
       }),
       validationOptions: { abortEarly: true },
     }),
