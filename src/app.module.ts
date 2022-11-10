@@ -10,6 +10,7 @@ import { UsersModule } from './users/users.module';
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         NODE_ENV: Joi.string().valid('development', 'production').default('development'),
+        DATABASE_URL: Joi.string().required(),
       }),
       validationOptions: { abortEarly: true },
     }),
