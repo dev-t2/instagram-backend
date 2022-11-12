@@ -5,6 +5,7 @@
   - [Validation](https://docs.nestjs.com/techniques/validation)
   - [Prisma](https://docs.nestjs.com/recipes/prisma)
   - [OpenAPI](https://docs.nestjs.com/openapi/introduction)
+  - [Encryption and Hashing](https://docs.nestjs.com/security/encryption-and-hashing)
 - [PostgreSQL](https://www.postgresql.org)
 - [Prisma](https://www.prisma.io)
   - [Environment variables](https://www.prisma.io/docs/guides/development-environment/environment-variables)
