@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import bcrypt from 'bcrypt';
 
 import { UsersRepository } from './users.repository';
 import { CreateUserDto } from './users.dto';
@@ -7,19 +8,15 @@ import { CreateUserDto } from './users.dto';
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async createUser({ email, nickname }: CreateUserDto) {
-    const isEmail = await this.usersRepository.existsEmail(email);
+  async createUser({ email, nickname, password }: CreateUserDto) {
+    const isUser = await this.usersRepository.existsUser(email, nickname);
 
-    if (isEmail) {
+    if (isUser) {
       throw new BadRequestException();
     }
 
-    const isNickname = await this.usersRepository.existsNickname(nickname);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    if (isNickname) {
-      throw new BadRequestException();
-    }
-
-    return;
+    return await this.usersRepository.createUser({ email, nickname, password: hashedPassword });
   }
 }
