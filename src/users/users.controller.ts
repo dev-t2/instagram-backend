@@ -12,7 +12,7 @@ export class UsersController {
   @ApiOperation({ summary: '회원가입' })
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {
-    return createUserDto;
+    return await this.usersService.createUser(createUserDto);
   }
 
   @ApiOperation({ summary: '프로필' })
