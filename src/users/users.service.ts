@@ -9,37 +9,25 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   async existsEmail(email: string) {
-    const isEmail = await this.usersRepository.existsEmail(email);
+    const isExistsEmail = await this.usersRepository.existsEmail(email);
 
-    if (isEmail) {
+    if (isExistsEmail) {
       throw new BadRequestException();
     }
   }
 
   async existsNickname(Nickname: string) {
-    const isNickname = await this.usersRepository.existsNickname(Nickname);
+    const isExistsNickname = await this.usersRepository.existsNickname(Nickname);
 
-    if (isNickname) {
+    if (isExistsNickname) {
       throw new BadRequestException();
     }
-  }
-
-  async existsUser({ email, nickname, password }: CreateUserDto) {
-    const isUser = await this.usersRepository.existsUser(email, nickname);
-
-    if (isUser) {
-      throw new BadRequestException();
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await this.usersRepository.createUser({ email, nickname, password: hashedPassword });
   }
 
   async createUser({ email, nickname, password }: CreateUserDto) {
-    const isUser = await this.usersRepository.existsUser(email, nickname);
+    const isExistsUser = await this.usersRepository.existsUser(email, nickname);
 
-    if (isUser) {
+    if (isExistsUser) {
       throw new BadRequestException();
     }
 
