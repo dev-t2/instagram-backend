@@ -32,6 +32,12 @@ export class UsersController {
     return await this.usersService.createUser(createUserDto);
   }
 
+  @ApiOperation({ summary: '로그인' })
+  @Post('login')
+  async login() {
+    return;
+  }
+
   @ApiOperation({ summary: '닉네임으로 유저 검색' })
   @Post('profile/nickname')
   async findUserByNickname(@Body() { nickname }: FindUserByNicknameDto) {

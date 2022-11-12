@@ -10,4 +10,6 @@ export class ExistsNickanmeDto extends PickType(User, ['nickname'] as const) {}
 
 export class CreateUserDto extends PickType(User, ['email', 'nickname', 'password'] as const) {}
 
+export class LoginDto extends PickType(User, ['email', 'password'] as const) {}
+
 export class FindUserByNicknameDto extends PickType(User, ['nickname'] as const) {}

@@ -59,6 +59,19 @@ export class UsersRepository {
     }
   }
 
+  async findUserByEmail(email: string) {
+    try {
+      return await this.prismaService.user.findUnique({
+        where: { email },
+        select: { id: true, password: true },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
   async findUserByNickname(nickname: string) {
     try {
       return await this.prismaService.user.findUnique({
