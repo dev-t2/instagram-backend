@@ -2,7 +2,12 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { UsersService } from './users.service';
-import { CreateUserDto, ExistsEmailDto, ExistsNicknameDto } from './users.dto';
+import {
+  CreateUserDto,
+  ExistsEmailDto,
+  ExistsNicknameDto,
+  FindUserByNicknameDto,
+} from './users.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -25,5 +30,11 @@ export class UsersController {
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.createUser(createUserDto);
+  }
+
+  @ApiOperation({ summary: '닉네임으로 유저 검색' })
+  @Post('profile/nickname')
+  async findUserByNickname(@Body() { nickname }: FindUserByNicknameDto) {
+    return await this.usersService.findUserByNickname(nickname);
   }
 }

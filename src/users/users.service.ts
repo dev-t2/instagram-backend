@@ -47,4 +47,8 @@ export class UsersService {
 
     await this.usersRepository.createUser({ email, nickname, password: hashedPassword });
   }
+
+  async findUserByNickname(nickname: string) {
+    return await this.usersRepository.findUserByNickname(nickname);
+  }
 }

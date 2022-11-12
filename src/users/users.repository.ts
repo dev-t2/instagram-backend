@@ -58,4 +58,17 @@ export class UsersRepository {
       throw new InternalServerErrorException();
     }
   }
+
+  async findUserByNickname(nickname: string) {
+    try {
+      return await this.prismaService.user.findUnique({
+        where: { nickname },
+        select: { userInfo: true },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
 }
