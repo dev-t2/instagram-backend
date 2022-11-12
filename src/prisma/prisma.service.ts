@@ -1,14 +1,13 @@
 import { INestApplication, Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 
+const { NODE_ENV } = process.env;
+
 @Injectable()
 export class PrismaService extends PrismaClient implements OnModuleInit {
   constructor() {
     super({
-      log:
-        process.env.NODE_ENV === 'production'
-          ? ['warn', 'error']
-          : ['query', 'info', 'warn', 'error'],
+      log: NODE_ENV === 'production' ? ['warn', 'error'] : ['info', 'query', 'warn', 'error'],
     });
   }
 
