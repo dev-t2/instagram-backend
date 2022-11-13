@@ -53,4 +53,22 @@ export class AuthService {
 
     return { ...this.createAccessToken(user.id), ...this.createRefreshToken(user.id) };
   }
+
+  async updatePassword(id: number, password: string, newPassword: string) {
+    const user = await this.usersRepository.findUserById(id);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    const isMatchedPassword = await bcrypt.compare(password, user.password);
+
+    if (!isMatchedPassword) {
+      throw new UnauthorizedException();
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    await this.usersRepository.updatePassword(user.id, hashedNewPassword);
+  }
 }

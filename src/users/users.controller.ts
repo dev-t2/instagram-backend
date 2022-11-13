@@ -5,7 +5,15 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from 'src/auth/auth.service';
 import { User } from 'src/common/decorators';
 import { UsersService } from './users.service';
-import { CreateUserDto, ExistsEmailDto, ExistsNicknameDto, LoginDto } from './users.dto';
+import {
+  CreateUserDto,
+  ExistsEmailDto,
+  ExistsNicknameDto,
+  LoginDto,
+  UpdateEmailDto,
+  UpdateNicknameDto,
+  UpdatePasswordDto,
+} from './users.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -45,6 +53,33 @@ export class UsersController {
   @Get('token')
   createAccessToken(@User('id') userId: number) {
     return this.authService.createAccessToken(userId);
+  }
+
+  @ApiOperation({ summary: '이메일 변경' })
+  @ApiBearerAuth('access')
+  @UseGuards(AuthGuard('access'))
+  @Post('email')
+  async updateEmail(@User('id') id: number, @Body() { email }: UpdateEmailDto) {
+    return await this.usersService.updateEmail(id, email);
+  }
+
+  @ApiOperation({ summary: '닉네임 변경' })
+  @ApiBearerAuth('access')
+  @UseGuards(AuthGuard('access'))
+  @Post('nickname')
+  async updateNickname(@User('id') id: number, @Body() { nickname }: UpdateNicknameDto) {
+    return await this.usersService.updateNickname(id, nickname);
+  }
+
+  @ApiOperation({ summary: '비밀번호 변경' })
+  @ApiBearerAuth('access')
+  @UseGuards(AuthGuard('access'))
+  @Post('password')
+  async updatePassword(
+    @User('id') id: number,
+    @Body() { password, newPassword }: UpdatePasswordDto,
+  ) {
+    return await this.authService.updatePassword(id, password, newPassword);
   }
 
   @ApiOperation({ summary: '닉네임으로 유저 검색' })
