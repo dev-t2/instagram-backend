@@ -14,8 +14,8 @@ export class UsersService {
     }
   }
 
-  async existsNickname(Nickname: string) {
-    const isExistsNickname = await this.usersRepository.existsNickname(Nickname);
+  async existsNickname(nickname: string) {
+    const isExistsNickname = await this.usersRepository.existsNickname(nickname);
 
     if (isExistsNickname) {
       throw new BadRequestException();
