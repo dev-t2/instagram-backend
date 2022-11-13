@@ -17,11 +17,11 @@ export class AuthService {
   ) {}
 
   createAccessToken(id: number) {
-    return this.jwtService.sign({ sub: 'access', id }, { expiresIn: '5m' });
+    return { accessToken: this.jwtService.sign({ sub: 'access', id }, { expiresIn: '5m' }) };
   }
 
   createRefreshToken(id: number) {
-    return this.jwtService.sign({ sub: 'refresh', id });
+    return { refreshToken: this.jwtService.sign({ sub: 'refresh', id }) };
   }
 
   async createUser(email: string, nickname: string, password: string) {
@@ -40,8 +40,8 @@ export class AuthService {
     });
 
     return {
-      accessToken: this.createAccessToken(user.id),
-      refreshToken: this.createRefreshToken(user.id),
+      accessToken: this.createAccessToken(user.id).accessToken,
+      refreshToken: this.createRefreshToken(user.id).refreshToken,
     };
   }
 

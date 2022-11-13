@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { AuthService } from 'src/auth/auth.service';
 import { UsersService } from './users.service';
@@ -43,7 +43,15 @@ export class UsersController {
     return await this.authService.login(email, password);
   }
 
+  @ApiOperation({ summary: '토큰 재발급' })
+  @ApiBearerAuth('refresh')
+  @Post('token')
+  createAccessToken() {
+    return this.authService.createAccessToken(4);
+  }
+
   @ApiOperation({ summary: '닉네임으로 유저 검색' })
+  @ApiBearerAuth('access')
   @Post('profile/nickname')
   async findUserByNickname(@Body() { nickname }: FindUserByNicknameDto) {
     return await this.usersService.findUserByNickname(nickname);
