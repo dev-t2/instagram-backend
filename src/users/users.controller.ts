@@ -1,17 +1,11 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 
 import { AuthService } from 'src/auth/auth.service';
 import { User } from 'src/common/decorators';
 import { UsersService } from './users.service';
-import {
-  CreateUserDto,
-  ExistsEmailDto,
-  ExistsNicknameDto,
-  FindUserByNicknameDto,
-  LoginDto,
-} from './users.dto';
+import { CreateUserDto, ExistsEmailDto, ExistsNicknameDto, LoginDto } from './users.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -48,7 +42,7 @@ export class UsersController {
   @ApiOperation({ summary: '토큰 재발급' })
   @ApiBearerAuth('refresh')
   @UseGuards(AuthGuard('refresh'))
-  @Post('token')
+  @Get('token')
   createAccessToken(@User('id') userId: number) {
     return this.authService.createAccessToken(userId);
   }
@@ -56,8 +50,8 @@ export class UsersController {
   @ApiOperation({ summary: '닉네임으로 유저 검색' })
   @ApiBearerAuth('access')
   @UseGuards(AuthGuard('access'))
-  @Post('profile/nickname')
-  async findUserByNickname(@Body() { nickname }: FindUserByNicknameDto) {
+  @Get('profile/:nickname')
+  async findUserByNickname(@Param('nickname') nickname: string) {
     return await this.usersService.findUserByNickname(nickname);
   }
 }

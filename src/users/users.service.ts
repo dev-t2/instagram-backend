@@ -23,6 +23,8 @@ export class UsersService {
   }
 
   async findUserByNickname(nickname: string) {
-    return await this.usersRepository.findUserByNickname(nickname);
+    if (nickname.trim()) {
+      return await this.usersRepository.findUserByNickname(nickname);
+    }
   }
 }
