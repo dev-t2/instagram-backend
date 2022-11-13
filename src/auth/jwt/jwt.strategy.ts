@@ -10,7 +10,7 @@ interface IValidate {
 }
 
 @Injectable()
-export class AccessStrategy extends PassportStrategy(Strategy, 'access') {
+export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly usersRepository: UsersRepository) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -20,7 +20,7 @@ export class AccessStrategy extends PassportStrategy(Strategy, 'access') {
   }
 
   async validate({ sub, id }: IValidate) {
-    if (sub !== 'access') {
+    if (sub !== 'jwt') {
       throw new UnauthorizedException();
     }
 

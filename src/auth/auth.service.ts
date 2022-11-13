@@ -1,14 +1,8 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 
 import { UsersRepository } from 'src/users/users.repository';
-import { CreateUserDto, LoginDto } from 'src/users/users.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,29 +11,7 @@ export class AuthService {
     private readonly usersRepository: UsersRepository,
   ) {}
 
-  createAccessToken(id: number) {
-    return { accessToken: this.jwtService.sign({ sub: 'access', id }, { expiresIn: '5m' }) };
-  }
-
-  createRefreshToken(id: number) {
-    return { refreshToken: this.jwtService.sign({ sub: 'refresh', id }) };
-  }
-
-  async createUser({ email, nickname, password }: CreateUserDto) {
-    const isExistsUser = await this.usersRepository.existsUser(email, nickname);
-
-    if (isExistsUser) {
-      throw new BadRequestException();
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await this.usersRepository.createUser(email, nickname, hashedPassword);
-
-    return { ...this.createAccessToken(user.id), ...this.createRefreshToken(user.id) };
-  }
-
-  async login({ email, password }: LoginDto) {
+  async login(email: string, password: string) {
     const user = await this.usersRepository.findUserByEmail(email);
 
     if (!user) {
@@ -52,6 +24,6 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    return { ...this.createAccessToken(user.id), ...this.createRefreshToken(user.id) };
+    return { token: this.jwtService.sign({ sub: 'jwt', id: user.id }) };
   }
 }

@@ -2,11 +2,23 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import bcrypt from 'bcrypt';
 
 import { UsersRepository } from './users.repository';
-import { UpdateProfileDto } from './users.dto';
+import { CreateUserDto, UpdateProfileDto } from './users.dto';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
+
+  async createUser({ email, nickname, password }: CreateUserDto) {
+    const isExistsUser = await this.usersRepository.existsUser(email, nickname);
+
+    if (isExistsUser) {
+      throw new BadRequestException();
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await this.usersRepository.createUser(email, nickname, hashedPassword);
+  }
 
   async updateProfile(id: number, { email, nickname, password }: UpdateProfileDto) {
     let hashedPassword;
@@ -15,7 +27,7 @@ export class UsersService {
       hashedPassword = await bcrypt.hash(password, 10);
     }
 
-    return await this.usersRepository.updateProfile(id, {
+    await this.usersRepository.updateProfile(id, {
       email,
       nickname,
       password: hashedPassword,

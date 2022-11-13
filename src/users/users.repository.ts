@@ -61,7 +61,7 @@ export class UsersRepository {
 
   async updateProfile(id: number, updateProfileDto: UpdateProfileDto) {
     try {
-      await this.prismaService.user.update({
+      return await this.prismaService.user.update({
         where: { id },
         data: updateProfileDto,
         select: { id: true },
