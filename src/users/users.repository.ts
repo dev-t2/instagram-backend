@@ -6,32 +6,6 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UsersRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findUserByEmail(email: string) {
-    try {
-      return await this.prismaService.user.findUnique({
-        where: { email },
-        select: { id: true, password: true },
-      });
-    } catch (e) {
-      console.error(e);
-
-      throw new InternalServerErrorException();
-    }
-  }
-
-  async findUserByNickname(nickname: string) {
-    try {
-      return await this.prismaService.user.findUnique({
-        where: { nickname },
-        select: { id: true, nickname: true },
-      });
-    } catch (e) {
-      console.error(e);
-
-      throw new InternalServerErrorException();
-    }
-  }
-
   async existsUser(email: string, nickname: string) {
     try {
       return await this.prismaService.user.findFirst({
@@ -58,6 +32,19 @@ export class UsersRepository {
     }
   }
 
+  async findUserByEmail(email: string) {
+    try {
+      return await this.prismaService.user.findUnique({
+        where: { email },
+        select: { id: true, password: true },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
   async findUserById(id: number) {
     try {
       return await this.prismaService.user.findUnique({
@@ -71,40 +58,11 @@ export class UsersRepository {
     }
   }
 
-  async updateEmail(id: number, email: string) {
+  async findUserByNickname(nickname: string) {
     try {
-      return await this.prismaService.user.update({
-        where: { id },
-        data: { email },
-        select: { id: true, email: true },
-      });
-    } catch (e) {
-      console.error(e);
-
-      throw new InternalServerErrorException();
-    }
-  }
-
-  async updateNickname(id: number, nickname: string) {
-    try {
-      return await this.prismaService.user.update({
-        where: { id },
-        data: { nickname },
+      return await this.prismaService.user.findUnique({
+        where: { nickname },
         select: { id: true, nickname: true },
-      });
-    } catch (e) {
-      console.error(e);
-
-      throw new InternalServerErrorException();
-    }
-  }
-
-  async updatePassword(id: number, password: string) {
-    try {
-      return await this.prismaService.user.update({
-        where: { id },
-        data: { password },
-        select: { id: true },
       });
     } catch (e) {
       console.error(e);

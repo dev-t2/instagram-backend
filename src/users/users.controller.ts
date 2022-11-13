@@ -5,15 +5,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from 'src/auth/auth.service';
 import { User } from 'src/common/decorators';
 import { UsersService } from './users.service';
-import {
-  CreateUserDto,
-  ExistsEmailDto,
-  ExistsNicknameDto,
-  LoginDto,
-  UpdateEmailDto,
-  UpdateNicknameDto,
-  UpdatePasswordDto,
-} from './users.dto';
+import { CreateUserDto, LoginDto, UpdateProfileDto } from './users.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -22,18 +14,6 @@ export class UsersController {
     private readonly authService: AuthService,
     private readonly usersService: UsersService,
   ) {}
-
-  @ApiOperation({ summary: '이메일 중복 확인' })
-  @Post('email/exists')
-  async existsEmail(@Body() { email }: ExistsEmailDto) {
-    return await this.usersService.existsEmail(email);
-  }
-
-  @ApiOperation({ summary: '닉네임 중복 확인' })
-  @Post('nickname/exists')
-  async existsNickname(@Body() { nickname }: ExistsNicknameDto) {
-    return await this.usersService.existsNickname(nickname);
-  }
 
   @ApiOperation({ summary: '회원가입' })
   @Post()
@@ -51,38 +31,19 @@ export class UsersController {
   @ApiBearerAuth('refresh')
   @UseGuards(AuthGuard('refresh'))
   @Get('token')
-  createAccessToken(@User('id') userId: number) {
-    return this.authService.createAccessToken(userId);
+  createAccessToken(@User('id') id: number) {
+    return this.authService.createAccessToken(id);
   }
 
-  @ApiOperation({ summary: '이메일 변경' })
+  @ApiOperation({ summary: '프로필 업데이트' })
   @ApiBearerAuth('access')
   @UseGuards(AuthGuard('access'))
-  @Post('email')
-  async updateEmail(@User('id') id: number, @Body() { email }: UpdateEmailDto) {
-    return await this.usersService.updateEmail(id, email);
+  @Post('profile')
+  async updateProfile(@User('id') id: number, @Body() updateProfileDto: UpdateProfileDto) {
+    return { id, updateProfileDto };
   }
 
-  @ApiOperation({ summary: '닉네임 변경' })
-  @ApiBearerAuth('access')
-  @UseGuards(AuthGuard('access'))
-  @Post('nickname')
-  async updateNickname(@User('id') id: number, @Body() { nickname }: UpdateNicknameDto) {
-    return await this.usersService.updateNickname(id, nickname);
-  }
-
-  @ApiOperation({ summary: '비밀번호 변경' })
-  @ApiBearerAuth('access')
-  @UseGuards(AuthGuard('access'))
-  @Post('password')
-  async updatePassword(
-    @User('id') id: number,
-    @Body() { password, newPassword }: UpdatePasswordDto,
-  ) {
-    return await this.authService.updatePassword(id, password, newPassword);
-  }
-
-  @ApiOperation({ summary: '닉네임으로 유저 검색' })
+  @ApiOperation({ summary: '유저 검색' })
   @ApiBearerAuth('access')
   @UseGuards(AuthGuard('access'))
   @Get('profile/:nickname')
