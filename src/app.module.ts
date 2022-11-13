@@ -4,6 +4,7 @@ import Joi from 'joi';
 
 import { PrismaModule } from './prisma/prisma.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,11 +14,13 @@ import { UsersModule } from './users/users.module';
         DATABASE_URL: Joi.string().required(),
         ADMIN_NAME: Joi.string().required(),
         ADMIN_PASSWORD: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
       }),
       validationOptions: { abortEarly: true },
     }),
     PrismaModule,
     UsersModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

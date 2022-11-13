@@ -1,18 +1,23 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { AuthService } from 'src/auth/auth.service';
 import { UsersService } from './users.service';
 import {
   CreateUserDto,
   ExistsEmailDto,
   ExistsNicknameDto,
   FindUserByNicknameDto,
+  LoginDto,
 } from './users.dto';
 
 @ApiTags('Users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @ApiOperation({ summary: '이메일 중복 확인' })
   @Post('email/exists')
@@ -28,14 +33,14 @@ export class UsersController {
 
   @ApiOperation({ summary: '회원가입' })
   @Post()
-  async createUser(@Body() createUserDto: CreateUserDto) {
-    return await this.usersService.createUser(createUserDto);
+  async createUser(@Body() { email, nickname, password }: CreateUserDto) {
+    return await this.authService.createUser(email, nickname, password);
   }
 
   @ApiOperation({ summary: '로그인' })
   @Post('login')
-  async login() {
-    return;
+  async login(@Body() { email, password }: LoginDto) {
+    return await this.authService.login(email, password);
   }
 
   @ApiOperation({ summary: '닉네임으로 유저 검색' })
