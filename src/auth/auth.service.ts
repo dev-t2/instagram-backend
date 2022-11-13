@@ -39,10 +39,7 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    return {
-      accessToken: this.createAccessToken(user.id).accessToken,
-      refreshToken: this.createRefreshToken(user.id).refreshToken,
-    };
+    return { ...this.createAccessToken(user.id), ...this.createRefreshToken(user.id) };
   }
 
   async login(email: string, password: string) {
@@ -58,9 +55,6 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    return {
-      accessToken: this.createAccessToken(user.id),
-      refreshToken: this.createRefreshToken(user.id),
-    };
+    return { ...this.createAccessToken(user.id), ...this.createRefreshToken(user.id) };
   }
 }
