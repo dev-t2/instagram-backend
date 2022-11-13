@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UpdateProfileDto } from './users.dto';
 
 @Injectable()
 export class UsersRepository {
@@ -50,6 +51,20 @@ export class UsersRepository {
       return await this.prismaService.user.findUnique({
         where: { id },
         select: { id: true, password: true },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async updateProfile(id: number, updateProfileDto: UpdateProfileDto) {
+    try {
+      await this.prismaService.user.update({
+        where: { id },
+        data: updateProfileDto,
+        select: { id: true },
       });
     } catch (e) {
       console.error(e);

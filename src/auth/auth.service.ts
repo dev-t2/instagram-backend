@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 
 import { UsersRepository } from 'src/users/users.repository';
+import { CreateUserDto, LoginDto } from 'src/users/users.dto';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
     return { refreshToken: this.jwtService.sign({ sub: 'refresh', id }) };
   }
 
-  async createUser(email: string, nickname: string, password: string) {
+  async createUser({ email, nickname, password }: CreateUserDto) {
     const isExistsUser = await this.usersRepository.existsUser(email, nickname);
 
     if (isExistsUser) {
@@ -38,7 +39,7 @@ export class AuthService {
     return { ...this.createAccessToken(user.id), ...this.createRefreshToken(user.id) };
   }
 
-  async login(email: string, password: string) {
+  async login({ email, password }: LoginDto) {
     const user = await this.usersRepository.findUserByEmail(email);
 
     if (!user) {

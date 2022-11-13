@@ -17,20 +17,20 @@ export class UsersController {
 
   @ApiOperation({ summary: '회원가입' })
   @Post()
-  async createUser(@Body() { email, nickname, password }: CreateUserDto) {
-    return await this.authService.createUser(email, nickname, password);
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    return await this.authService.createUser(createUserDto);
   }
 
   @ApiOperation({ summary: '로그인' })
   @Post('login')
-  async login(@Body() { email, password }: LoginDto) {
-    return await this.authService.login(email, password);
+  async login(@Body() loginDto: LoginDto) {
+    return await this.authService.login(loginDto);
   }
 
   @ApiOperation({ summary: '토큰 재발급' })
   @ApiBearerAuth('refresh')
   @UseGuards(AuthGuard('refresh'))
-  @Get('token')
+  @Post('token')
   createAccessToken(@User('id') id: number) {
     return this.authService.createAccessToken(id);
   }
@@ -40,7 +40,7 @@ export class UsersController {
   @UseGuards(AuthGuard('access'))
   @Post('profile')
   async updateProfile(@User('id') id: number, @Body() updateProfileDto: UpdateProfileDto) {
-    return { id, updateProfileDto };
+    return await this.usersService.updateProfile(id, updateProfileDto);
   }
 
   @ApiOperation({ summary: '유저 검색' })
