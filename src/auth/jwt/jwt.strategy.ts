@@ -7,6 +7,7 @@ import { UsersRepository } from 'src/users/users.repository';
 interface IValidate {
   sub: string;
   id: number;
+  iat: number;
 }
 
 @Injectable()
@@ -19,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate({ sub, id }: IValidate) {
+  async validate({ sub, id, iat }: IValidate) {
     if (sub !== 'jwt') {
       throw new UnauthorizedException();
     }
@@ -27,6 +28,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const user = await this.usersRepository.findUserById(id);
 
     if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    const issuedAt = Math.floor(new Date(user.issuedAt).getTime() / 1000);
+
+    if (iat < issuedAt) {
       throw new UnauthorizedException();
     }
 

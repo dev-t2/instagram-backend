@@ -46,11 +46,25 @@ export class UsersRepository {
     }
   }
 
+  async updateIssuedAt(id: number) {
+    try {
+      return await this.prismaService.user.update({
+        where: { id },
+        data: { issuedAt: new Date() },
+        select: { id: true },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
   async findUserById(id: number) {
     try {
       return await this.prismaService.user.findUnique({
         where: { id },
-        select: { id: true, password: true },
+        select: { id: true, issuedAt: true },
       });
     } catch (e) {
       console.error(e);

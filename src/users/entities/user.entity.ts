@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User as UserModel } from '@prisma/client';
-import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
+import { IsDate, IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
 
 import { Common } from 'src/common/entities';
 
@@ -19,4 +19,8 @@ export class User extends Common implements UserModel {
     message: 'password must be a password',
   })
   password: string;
+
+  @ApiProperty({ description: '토큰 발행 날짜' })
+  @IsDate()
+  issuedAt: Date;
 }

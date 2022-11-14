@@ -24,6 +24,8 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
+    await this.usersRepository.updateIssuedAt(user.id);
+
     return { token: this.jwtService.sign({ sub: 'jwt', id: user.id }) };
   }
 }
