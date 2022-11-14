@@ -6,11 +6,11 @@ export class Common {
   @IsPositive()
   id: number;
 
-  @ApiProperty({ description: '생성된 날짜' })
+  @ApiProperty({ description: '생성 날짜' })
   @IsDate()
   createdAt: Date;
 
-  @ApiProperty({ description: '업데이트된 날짜' })
+  @ApiProperty({ description: '업데이트 날짜' })
   @IsDate()
   updatedAt: Date;
 }
