@@ -22,5 +22,5 @@ export class User extends Common implements UserModel {
 
   @ApiProperty({ description: '토큰 발행 날짜' })
   @IsDate()
-  issuedAt: Date;
+  issuedAt: Date | null;
 }
