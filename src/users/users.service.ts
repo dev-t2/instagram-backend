@@ -20,8 +20,8 @@ export class UsersService {
     await this.usersRepository.createUser(email, nickname, hashedPassword);
   }
 
-  async updateProfile(id: number, { email, nickname, password }: UpdateProfileDto) {
-    let hashedPassword;
+  async updateProfile(id: number, { email, nickname, password, bio }: UpdateProfileDto) {
+    let hashedPassword: string | undefined;
 
     if (password) {
       hashedPassword = await bcrypt.hash(password, 10);
@@ -31,6 +31,7 @@ export class UsersService {
       email,
       nickname,
       password: hashedPassword,
+      bio,
     });
   }
 

@@ -23,7 +23,14 @@ export class UsersRepository {
   async createUser(email: string, nickname: string, password: string) {
     try {
       return await this.prismaService.user.create({
-        data: { email, nickname, password, userInfo: { create: {} } },
+        data: {
+          email,
+          nickname,
+          password,
+          userInfo: {
+            create: {},
+          },
+        },
         select: { id: true },
       });
     } catch (e) {
@@ -73,11 +80,18 @@ export class UsersRepository {
     }
   }
 
-  async updateProfile(id: number, updateProfileDto: UpdateProfileDto) {
+  async updateProfile(id: number, { email, nickname, password, bio }: UpdateProfileDto) {
     try {
       return await this.prismaService.user.update({
         where: { id },
-        data: updateProfileDto,
+        data: {
+          email,
+          nickname,
+          password,
+          userInfo: {
+            update: { bio },
+          },
+        },
         select: { id: true },
       });
     } catch (e) {
@@ -91,7 +105,13 @@ export class UsersRepository {
     try {
       return await this.prismaService.user.findUnique({
         where: { nickname },
-        select: { id: true, nickname: true },
+        select: {
+          id: true,
+          nickname: true,
+          userInfo: {
+            select: { avatar: true, bio: true },
+          },
+        },
       });
     } catch (e) {
       console.error(e);
