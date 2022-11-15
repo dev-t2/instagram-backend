@@ -20,6 +20,10 @@ export class UsersService {
     await this.usersRepository.createUser(email, nickname, hashedPassword);
   }
 
+  async logout(id: number) {
+    await this.usersRepository.updateIssuedAt(id, null);
+  }
+
   async updateProfile(id: number, { email, nickname, password, bio }: UpdateProfileDto) {
     let hashedPassword: string | undefined;
 

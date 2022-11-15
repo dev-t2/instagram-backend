@@ -27,6 +27,14 @@ export class UsersController {
     return await this.authService.login(email, password);
   }
 
+  @ApiOperation({ summary: '로그아웃' })
+  @ApiBearerAuth('token')
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  async logout(@User('id') id: number) {
+    return await this.usersService.logout(id);
+  }
+
   @ApiOperation({ summary: '프로필 업데이트' })
   @ApiBearerAuth('token')
   @UseGuards(JwtAuthGuard)

@@ -53,11 +53,11 @@ export class UsersRepository {
     }
   }
 
-  async updateIssuedAt(id: number) {
+  async updateIssuedAt(id: number, issuedAt: Date | null) {
     try {
       return await this.prismaService.user.update({
         where: { id },
-        data: { issuedAt: new Date() },
+        data: { issuedAt },
         select: { id: true },
       });
     } catch (e) {
