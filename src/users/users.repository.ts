@@ -53,12 +53,11 @@ export class UsersRepository {
     }
   }
 
-  async updateIssuedAt(id: number, issuedAt: Date | null) {
+  async findUserById(id: number) {
     try {
-      return await this.prismaService.user.update({
+      return await this.prismaService.user.findUnique({
         where: { id },
-        data: { issuedAt },
-        select: { id: true },
+        select: { id: true, issuedAt: true },
       });
     } catch (e) {
       console.error(e);
@@ -67,11 +66,12 @@ export class UsersRepository {
     }
   }
 
-  async findUserById(id: number) {
+  async updateIssuedAt(id: number, issuedAt: Date | null) {
     try {
-      return await this.prismaService.user.findUnique({
+      return await this.prismaService.user.update({
         where: { id },
-        select: { id: true, issuedAt: true },
+        data: { issuedAt },
+        select: { id: true },
       });
     } catch (e) {
       console.error(e);
