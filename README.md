@@ -7,6 +7,7 @@
   - [OpenAPI](https://docs.nestjs.com/openapi/introduction)
   - [Encryption and Hashing](https://docs.nestjs.com/security/encryption-and-hashing)
   - [Authentication](https://docs.nestjs.com/security/authentication)
+  - [File upload](https://docs.nestjs.com/techniques/file-upload)
 - [PostgreSQL](https://www.postgresql.org)
 - [Prisma](https://www.prisma.io)
   - [Environment variables](https://www.prisma.io/docs/guides/development-environment/environment-variables)
