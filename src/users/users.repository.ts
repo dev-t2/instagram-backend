@@ -27,9 +27,7 @@ export class UsersRepository {
           email,
           nickname,
           password,
-          userInfo: {
-            create: {},
-          },
+          userInfo: { create: {} },
         },
         select: { id: true },
       });
@@ -88,9 +86,7 @@ export class UsersRepository {
           email,
           nickname,
           password,
-          userInfo: {
-            update: { bio },
-          },
+          userInfo: { update: { bio } },
         },
         select: { id: true },
       });
@@ -108,9 +104,7 @@ export class UsersRepository {
         select: {
           id: true,
           nickname: true,
-          userInfo: {
-            select: { avatar: true, bio: true },
-          },
+          userInfo: { select: { avatar: true, bio: true } },
         },
       });
     } catch (e) {
