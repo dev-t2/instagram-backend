@@ -1,5 +1,15 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { User } from 'src/common/decorators';
 import { AuthService } from 'src/auth/auth.service';
@@ -41,6 +51,24 @@ export class UsersController {
   @Post('profile')
   async updateProfile(@User('id') id: number, @Body() updateProfileDto: UpdateProfileDto) {
     return await this.usersService.updateProfile(id, updateProfileDto);
+  }
+
+  @ApiOperation({ summary: '아바타 업로드' })
+  @ApiBearerAuth('token')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: { avatar: { type: 'string', format: 'binary' } },
+    },
+  })
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(FileInterceptor('avatar'))
+  @Post('avatar')
+  async uploadAvatar(@UploadedFile() avatar: Express.Multer.File) {
+    console.log(avatar);
+
+    return;
   }
 
   @ApiOperation({ summary: '유저 검색' })
