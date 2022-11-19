@@ -65,8 +65,8 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('avatar'))
   @Post('avatar')
-  async uploadAvatar(@UploadedFile() avatar: Express.Multer.File) {
-    console.log(avatar);
+  async uploadAvatar(@User('id') id: number, @UploadedFile() avatar: Express.Multer.File) {
+    console.log({ id, avatar });
 
     return;
   }
