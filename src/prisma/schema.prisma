@@ -15,20 +15,20 @@ model User {
   email     String    @unique
   nickname  String    @unique
   password  String
+  userInfo  UserInfo?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   issuedAt  DateTime?
-
-  userInfo UserInfo?
 }
 
 model UserInfo {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @unique
+  id        Int        @id @default(autoincrement())
+  userId    Int        @unique
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   avatar    String?
   bio       String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  followers UserInfo[] @relation(name: "Follow")
+  following UserInfo[] @relation(name: "Follow")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
