@@ -14,6 +14,7 @@
   - [Environment variables](https://www.prisma.io/docs/guides/development-environment/environment-variables)
   - [Configuring logging](https://www.prisma.io/docs/concepts/components/prisma-client/working-with-prismaclient/logging)
   - [Prisma Studio](https://www.prisma.io/docs/concepts/components/prisma-studio)
+  - [Self-relations](https://www.prisma.io/docs/concepts/components/prisma-schema/relations/self-relations)
 - [Express Basic Auth](https://github.com/LionC/express-basic-auth)
 - [Random Key Generator](https://randomkeygen.com)
 - [JSON Web Tokens](https://jwt.io)
