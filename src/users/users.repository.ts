@@ -97,6 +97,20 @@ export class UsersRepository {
     }
   }
 
+  async follow(id: number, userId: number) {
+    try {
+      return await this.prismaService.userInfo.update({
+        where: { id },
+        data: { following: { connect: { userId } } },
+        select: { id: true },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
   async findUserByNickname(nickname: string) {
     try {
       return await this.prismaService.user.findUnique({

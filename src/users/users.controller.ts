@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -12,6 +13,7 @@ import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nes
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { User } from 'src/common/decorators';
+import { ParsePositiveIntPipe } from 'src/common/pipes';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt';
 import { UsersService } from './users.service';
@@ -48,7 +50,7 @@ export class UsersController {
   @ApiOperation({ summary: '프로필 업데이트' })
   @ApiBearerAuth('token')
   @UseGuards(JwtAuthGuard)
-  @Post('profile')
+  @Put('profile')
   async updateProfile(@User('id') id: number, @Body() updateProfileDto: UpdateProfileDto) {
     return await this.usersService.updateProfile(id, updateProfileDto);
   }
@@ -64,11 +66,19 @@ export class UsersController {
   })
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('avatar'))
-  @Post('avatar')
+  @Put('avatar')
   async uploadAvatar(@User('id') id: number, @UploadedFile() avatar: Express.Multer.File) {
     console.log({ id, avatar });
 
     return;
+  }
+
+  @ApiOperation({ summary: '팔로우' })
+  @ApiBearerAuth('token')
+  @UseGuards(JwtAuthGuard)
+  @Post('follow/:userId')
+  async follow(@User('id') id: number, @Param('userId', ParsePositiveIntPipe) userId: number) {
+    return await this.usersService.follow(id, userId);
   }
 
   @ApiOperation({ summary: '유저 검색' })
