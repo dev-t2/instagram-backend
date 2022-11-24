@@ -49,6 +49,16 @@ export class UsersService {
     await this.usersRepository.follow(id, user.id);
   }
 
+  async unfollow(id: number, userId: number) {
+    const user = await this.usersRepository.findUserById(userId);
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    await this.usersRepository.unfollow(id, user.id);
+  }
+
   async findUserByNickname(nickname: string) {
     if (!nickname.trim()) {
       throw new BadRequestException();

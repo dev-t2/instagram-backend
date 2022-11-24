@@ -111,6 +111,20 @@ export class UsersRepository {
     }
   }
 
+  async unfollow(id: number, userId: number) {
+    try {
+      return await this.prismaService.userInfo.update({
+        where: { id },
+        data: { following: { disconnect: { userId } } },
+        select: { id: true },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
   async findUserByNickname(nickname: string) {
     try {
       return await this.prismaService.user.findUnique({
