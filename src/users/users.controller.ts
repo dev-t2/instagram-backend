@@ -92,8 +92,8 @@ export class UsersController {
   @ApiOperation({ summary: '유저 검색' })
   @ApiBearerAuth('token')
   @UseGuards(JwtAuthGuard)
-  @Get('profile/:nickname')
-  async findUserByNickname(@Param('nickname') nickname: string) {
-    return await this.usersService.findUserByNickname(nickname);
+  @Get('profile/:userId')
+  async findUserInfoById(@Param('userId', ParsePositiveIntPipe) userId: number) {
+    return await this.usersService.findUserInfoById(userId);
   }
 }

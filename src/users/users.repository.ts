@@ -125,14 +125,24 @@ export class UsersRepository {
     }
   }
 
-  async findUserByNickname(nickname: string) {
+  async findUserInfoById(userId: number) {
     try {
-      return await this.prismaService.user.findUnique({
-        where: { nickname },
+      return await this.prismaService.userInfo.findUnique({
+        where: { userId },
         select: {
-          id: true,
-          nickname: true,
-          userInfo: { select: { avatar: true, bio: true } },
+          user: { select: { id: true, nickname: true } },
+          avatar: true,
+          bio: true,
+          followers: {
+            select: {
+              user: { select: { id: true, nickname: true } },
+            },
+          },
+          following: {
+            select: {
+              user: { select: { id: true, nickname: true } },
+            },
+          },
         },
       });
     } catch (e) {
