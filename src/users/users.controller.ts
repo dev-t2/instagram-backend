@@ -89,11 +89,19 @@ export class UsersController {
     return await this.usersService.unfollow(id, userId);
   }
 
-  @ApiOperation({ summary: '유저 검색' })
+  @ApiOperation({ summary: '유저 프로필' })
   @ApiBearerAuth('token')
   @UseGuards(JwtAuthGuard)
   @Get('profile/:userId')
   async findUserInfoById(@Param('userId', ParsePositiveIntPipe) userId: number) {
     return await this.usersService.findUserInfoById(userId);
+  }
+
+  @ApiOperation({ summary: '팔로워 리스트' })
+  @ApiBearerAuth('token')
+  @UseGuards(JwtAuthGuard)
+  @Post('profile/:userId/followers')
+  async followers(@Param('userId', ParsePositiveIntPipe) userId: number) {
+    return await this.usersService.followers(userId);
   }
 }
