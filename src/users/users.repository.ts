@@ -133,16 +133,40 @@ export class UsersRepository {
           user: { select: { id: true, nickname: true } },
           avatar: true,
           bio: true,
-          followers: {
-            select: {
-              user: { select: { id: true, nickname: true } },
-            },
-          },
-          following: {
-            select: {
-              user: { select: { id: true, nickname: true } },
-            },
-          },
+        },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async followersByUserId(userId: number, cursorId?: number) {
+    try {
+      const skip = cursorId ? 1 : 0;
+
+      return await this.prismaService.userInfo.findUnique({
+        where: { userId },
+        select: {
+          followers: { cursor: { id: cursorId }, skip, take: 50, select: { userId: true } },
+        },
+      });
+    } catch (e) {
+      console.error(e);
+
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async followingByUserId(userId: number, cursorId?: number) {
+    try {
+      const skip = cursorId ? 1 : 0;
+
+      return await this.prismaService.userInfo.findUnique({
+        where: { userId },
+        select: {
+          following: { cursor: { id: cursorId }, skip, take: 50, select: { userId: true } },
         },
       });
     } catch (e) {

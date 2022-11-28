@@ -69,13 +69,23 @@ export class UsersService {
     return await this.usersRepository.findUserInfoById(user.id);
   }
 
-  async followers(userId: number) {
+  async followers(userId: number, cursorId?: number) {
     const user = await this.usersRepository.findUserById(userId);
 
     if (!user) {
       throw new NotFoundException();
     }
 
-    return;
+    return await this.usersRepository.followersByUserId(user.id, cursorId);
+  }
+
+  async following(userId: number, cursorId?: number) {
+    const user = await this.usersRepository.findUserById(userId);
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    return await this.usersRepository.followingByUserId(user.id, cursorId);
   }
 }

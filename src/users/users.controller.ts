@@ -17,7 +17,7 @@ import { ParsePositiveIntPipe } from 'src/common/pipes';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/jwt';
 import { UsersService } from './users.service';
-import { CreateUserDto, LoginDto, UpdateProfileDto } from './users.dto';
+import { CreateUserDto, FollowDto, LoginDto, UpdateProfileDto } from './users.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -101,7 +101,21 @@ export class UsersController {
   @ApiBearerAuth('token')
   @UseGuards(JwtAuthGuard)
   @Post('profile/:userId/followers')
-  async followers(@Param('userId', ParsePositiveIntPipe) userId: number) {
-    return await this.usersService.followers(userId);
+  async followers(
+    @Param('userId', ParsePositiveIntPipe) userId: number,
+    @Body() { cursorId }: FollowDto,
+  ) {
+    return await this.usersService.followers(userId, cursorId);
+  }
+
+  @ApiOperation({ summary: '팔로잉 리스트' })
+  @ApiBearerAuth('token')
+  @UseGuards(JwtAuthGuard)
+  @Post('profile/:userId/following')
+  async following(
+    @Param('userId', ParsePositiveIntPipe) userId: number,
+    @Body() { cursorId }: FollowDto,
+  ) {
+    return await this.usersService.following(userId, cursorId);
   }
 }
