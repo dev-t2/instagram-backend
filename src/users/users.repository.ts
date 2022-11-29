@@ -144,12 +144,21 @@ export class UsersRepository {
 
   async followersByUserId(userId: number, cursorId?: number) {
     try {
-      const skip = cursorId ? 1 : 0;
+      if (cursorId && cursorId > 0) {
+        return await this.prismaService.userInfo.findUnique({
+          where: { userId },
+          select: {
+            followers: { cursor: { id: cursorId }, skip: 1, take: 50, select: { userId: true } },
+            _count: { select: { followers: true } },
+          },
+        });
+      }
 
       return await this.prismaService.userInfo.findUnique({
         where: { userId },
         select: {
-          followers: { cursor: { id: cursorId }, skip, take: 50, select: { userId: true } },
+          followers: { take: 50, select: { userId: true } },
+          _count: { select: { followers: true } },
         },
       });
     } catch (e) {
@@ -161,12 +170,21 @@ export class UsersRepository {
 
   async followingByUserId(userId: number, cursorId?: number) {
     try {
-      const skip = cursorId ? 1 : 0;
+      if (cursorId && cursorId > 0) {
+        return await this.prismaService.userInfo.findUnique({
+          where: { userId },
+          select: {
+            following: { cursor: { id: cursorId }, skip: 1, take: 50, select: { userId: true } },
+            _count: { select: { following: true } },
+          },
+        });
+      }
 
       return await this.prismaService.userInfo.findUnique({
         where: { userId },
         select: {
-          following: { cursor: { id: cursorId }, skip, take: 50, select: { userId: true } },
+          following: { take: 50, select: { userId: true } },
+          _count: { select: { following: true } },
         },
       });
     } catch (e) {

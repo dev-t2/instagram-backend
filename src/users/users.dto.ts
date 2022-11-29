@@ -1,5 +1,4 @@
 import { ApiProperty, PartialType, PickType } from '@nestjs/swagger';
-import { IsPositive } from 'class-validator';
 
 import { User } from './entities';
 
@@ -13,7 +12,6 @@ export class UpdateProfileDto extends PartialType(CreateUserDto) {
 }
 
 export class FollowDto {
-  @ApiProperty({ required: true, description: '커서 아이디' })
-  @IsPositive()
+  @ApiProperty({ description: '커서 아이디' })
   cursorId?: number;
 }
